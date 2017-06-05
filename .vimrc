@@ -26,7 +26,7 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
@@ -59,14 +59,18 @@ Plugin 'msanders/snipmate.vim'
 Plugin 'wesleyche/SrcExpl'
 Plugin 'std_c.zip'
 Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'taglist.vim'
 Plugin 'TxtBrowser'
 Plugin 'ZoomWin'
-"Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'Raimondi/delimitMate'
-Plugin 'gtags.vim'
+" Plugin 'aceofall/gtags.vim'
+Plugin 'Shougo/neocomplete.vim'
+" Plugin 'Shougo/neosnippet.vim'
+" Plugin 'Shougo/neosnippet-snippets'
+" Plugin 'honza/vim-snippets'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -101,33 +105,33 @@ endif
 
 
 if g:islinux
-	set hlsearch        "高亮搜索
-	set incsearch       "在输入要搜索的文字时，实时匹配
+    set hlsearch        "高亮搜索
+    set incsearch       "在输入要搜索的文字时，实时匹配
 
-	" Uncomment the following to have Vim jump to the last position when
-	" reopening a file
-	if has("autocmd")
-		au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-	endif
+    " Uncomment the following to have Vim jump to the last position when
+    " reopening a file
+    if has("autocmd")
+        au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    endif
 
-"	" This line should not be removed as it ensures that various options are
-"	" properly set to work with the Vim-related packages available in Debian.
-"	runtime! debian.vim
-"
-"	" Vim5 and later versions support syntax highlighting. Uncommenting the next
-"	" line enables syntax highlighting by default.
-	if has("syntax")
-		syntax on
-	endif
+    "	" This line should not be removed as it ensures that various options are
+    "	" properly set to work with the Vim-related packages available in Debian.
+    "	runtime! debian.vim
+    "
+    "	" Vim5 and later versions support syntax highlighting. Uncommenting the next
+    "	" line enables syntax highlighting by default.
+    if has("syntax")
+        syntax on
+    endif
 
-	set mouse=a                    " 在任何模式下启用鼠标
-	set t_Co=256                   " 在终端启用256色
-	set backspace=2                " 设置退格键可用
+    set mouse=a                    " 在任何模式下启用鼠标
+    set t_Co=256                   " 在终端启用256色
+    set backspace=2                " 设置退格键可用
 
-      " Source a global configuration file if available
-      if filereadable("/etc/vim/vimrc.local")
-      	source /etc/vim/vimrc.local
-      endif
+    " Source a global configuration file if available
+    if filereadable("/etc/vim/vimrc.local")
+        source /etc/vim/vimrc.local
+    endif
 
 endif
 
@@ -200,7 +204,7 @@ imap <c-a> <ESC>ggVG$
 
 
 " 启用每行超过80列的字符提示（字体变蓝并加下划线），不启用就注释掉
-au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
+"au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
 
 
 " -----------------------------------------------------------------------------
@@ -278,38 +282,55 @@ colorscheme Tomorrow-Night-Eighties               "终端配色方案
 " -----------------------------------------------------------------------------
 set writebackup                             "保存文件前建立备份，保存成功后删除该备份
 set nobackup                                "设置无备份文件
- set noswapfile                              "设置无临时文件
- set vb t_vb=                                "关闭提示音
+set noswapfile                              "设置无临时文件
+set vb t_vb=                                "关闭提示音
 
+" Find merge conflict markers
+map <leader>fc /\v^[<\|=>]{7}( .*\|$ )<CR>
 
+" Shortcuts
+" Change Working Directory to that of the current file
+cmap cwd lcd %:p:h
+cmap cd. lcd %:p:h
 
- "=============================================================================
- "                         << 以下为常用插件配置 >>
- "=============================================================================
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
 
- "-----------------------------------------------------------------------------
- " < a.vim 插件配置 >
- "-----------------------------------------------------------------------------
- "用于切换C/C++头文件
+" Allow using the repeat operator with a visual selection (!)
+" http://stackoverflow.com/a/8064607/127816
+vnoremap . :normal .<CR>
+
+" For when you forget to sudo.. Really Write the file.
+cmap w!! w !sudo tee % >/dev/null
+
+"=============================================================================
+"                         << 以下为常用插件配置 >>
+"=============================================================================
+
+"-----------------------------------------------------------------------------
+" < a.vim 插件配置 >
+"-----------------------------------------------------------------------------
+"用于切换C/C++头文件
 " :A     ---切换头文件并独占整个窗口
 " :AV    ---切换头文件并垂直分割窗口
 " :AS    ---切换头文件并水平分割窗口
 "
- "-----------------------------------------------------------------------------
- " < Align 插件配置 >
- "-----------------------------------------------------------------------------
- "一个对齐的插件，用来——排版与对齐代码，功能强大，不过用到的机会不多
+"-----------------------------------------------------------------------------
+" < Align 插件配置 >
+"-----------------------------------------------------------------------------
+"一个对齐的插件，用来——排版与对齐代码，功能强大，不过用到的机会不多
 
- "-----------------------------------------------------------------------------
- " < auto-pairs 插件配置 >
- "-----------------------------------------------------------------------------
- "用于括号与引号自动补全，不过会与函数原型提示插件echofunc冲突
- "所以我就没有加入echofunc插件
+"-----------------------------------------------------------------------------
+" < auto-pairs 插件配置 >
+"-----------------------------------------------------------------------------
+"用于括号与引号自动补全，不过会与函数原型提示插件echofunc冲突
+"所以我就没有加入echofunc插件
 
- "-----------------------------------------------------------------------------
- " < BufExplorer 插件配置 >
- "-----------------------------------------------------------------------------
- "快速轻松的在缓存中切换（相当于另一种多个文件间的切换方式）
+"-----------------------------------------------------------------------------
+" < BufExplorer 插件配置 >
+"-----------------------------------------------------------------------------
+"快速轻松的在缓存中切换（相当于另一种多个文件间的切换方式）
 " <Leader>be 在当前窗口显示缓存列表并打开选定文件
 " <Leader>bs 水平分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
 " <Leader>bv 垂直分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
@@ -335,6 +356,47 @@ au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript} call CSyntaxAfter()
 " -----------------------------------------------------------------------------
 " 一个全路径模糊文件，缓冲区，最近最多使用，... 检索插件；详细帮助见 :h ctrlp
 " 常规模式下输入：Ctrl + p 调用插件
+" ctrlp {
+if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
+    let g:ctrlp_working_path_mode = 'ra'
+    nnoremap <silent> <D-t> :CtrlP<CR>
+    nnoremap <silent> <D-r> :CtrlPMRU<CR>
+    let g:ctrlp_custom_ignore = {
+                \ 'dir':  '\.git$\|\.hg$\|\.svn$',
+                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+
+    if executable('ag')
+        let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
+    elseif executable('ack-grep')
+        let s:ctrlp_fallback = 'ack-grep %s --nocolor -f'
+    elseif executable('ack')
+        let s:ctrlp_fallback = 'ack %s --nocolor -f'
+        " On Windows use "dir" as fallback command.
+    elseif WINDOWS()
+        let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
+    else
+        let s:ctrlp_fallback = 'find %s -type f'
+    endif
+    if exists("g:ctrlp_user_command")
+        unlet g:ctrlp_user_command
+    endif
+    let g:ctrlp_user_command = {
+                \ 'types': {
+                \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others'],
+                \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+                \ },
+                \ 'fallback': s:ctrlp_fallback
+                \ }
+
+    if isdirectory(expand("~/.vim/bundle/ctrlp-funky/"))
+        " CtrlP extensions
+        let g:ctrlp_extensions = ['funky']
+
+        "funky
+        nnoremap <Leader>fu :CtrlPFunky<Cr>
+    endif
+endif
+"}
 
 " -----------------------------------------------------------------------------
 "  < emmet-vim（前身为Zen coding） 插件配置 >
@@ -407,6 +469,23 @@ let NERDSpaceDelims = 1                     "在左注释符之后，右注释�
 nmap <F2> :NERDTreeToggle<CR>
 "当打开vim且没有文件时自动打开NERDTree
 "autocmd vimenter * if !argc() | NERDTree | endif
+
+" NerdTree {
+if isdirectory(expand("~/.vim/bundle/nerdtree"))
+    "  map <C-e> <plug>NERDTreeTabsToggle<CR>
+    "  map <leader>e :NERDTreeFind<CR>
+    "  nmap <leader>nt :NERDTreeFind<CR>
+
+    let NERDTreeShowBookmarks=1
+    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+    let NERDTreeChDirMode=0
+    let NERDTreeQuitOnOpen=1
+    let NERDTreeMouseMode=2
+    let NERDTreeShowHidden=1
+    let NERDTreeKeepTreeInNewTab=1
+    let g:nerdtree_tabs_open_on_gui_startup=0
+endif
+" }
 
 " -----------------------------------------------------------------------------
 "  < powerline 插件配置 >
@@ -495,15 +574,13 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " 用于C C++ objectC的自动补全和文件路径自动补全等
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
+
+
+
+
 " =============================================================================
 "                          << 以下为常用工具配置 >>
 " =============================================================================
-
-
-" -----------------------------------------------------------------------------
-"  < ctags 工具配置 >
-" -----------------------------------------------------------------------------
-map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
 
 " -----------------------------------------------------------------------------
 "  < cscope 工具配置 >
@@ -519,7 +596,7 @@ if has("cscope")
     "在当前目录中添加任何数据库
     if filereadable("cscope.out")
         cs add cscope.out
-    "否则添加数据库环境中所指出的
+        "否则添加数据库环境中所指出的
     elseif $CSCOPE_DB != ""
         cs add $CSCOPE_DB
     endif
@@ -539,7 +616,17 @@ endif
 "  < ctags 工具配置 >
 " -----------------------------------------------------------------------------
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
-set tags=./tags;                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
+" set tags=./tags;                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
+" map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
+" Ctags {
+set tags=./tags;/,~/.vimtags
+
+" Make tags placed in .git/tags file available in all levels of a repository
+let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+if gitroot != ''
+    let &tags = &tags . ',' . gitroot . '/.git/tags'
+endif
+" }
 
 " -----------------------------------------------------------------------------
 "  < gvimfullscreen 工具配置 > 请确保已安装了工具
@@ -552,6 +639,88 @@ set tags=./tags;                            "向上级目录递归查找tags文�
 " -----------------------------------------------------------------------------
 " 这里只用于窗口透明与置顶
 " 常规模式下 Ctrl + Up（上方向键） 增加不透明度，Ctrl + Down（下方向键） 减少不透明度，<Leader>t 窗口置顶与否切换
+
+" -----------------------------------------------------------------------------
+"  < gtags 工具配置 >
+" -----------------------------------------------------------------------------
+" set cscopetag " 使用 cscope 作为 tags 命令
+" set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
+
+" let GtagsCscope_Auto_Load = 1
+" let CtagsCscope_Auto_Map = 1
+" let GtagsCscope_Quiet = 1
+
+
+"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+
+" Define dictionary.
+let g:neocomplete#sources#dictionary#dictionaries = {
+    \ 'default' : '',
+    \ 'vimshell' : $HOME.'/.vimshell_hist',
+    \ 'scheme' : $HOME.'/.gosh_completions'
+        \ }
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Recommended key-mappings.
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+  " For no inserting <CR> key.
+  return pumvisible() ? "\<C-y>" : "\<CR>"
+endfunction
+" <TAB>: completion.
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" Close popup by <Space>.
+"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+" AutoComplPop like behavior.
+"let g:neocomplete#enable_auto_select = 1
+
+" Shell like behavior(not recommended).
+"set completeopt+=longest
+"let g:neocomplete#enable_auto_select = 1
+"let g:neocomplete#disable_auto_complete = 1
+"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+" Enable omni completion.
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+" For perlomni.vim setting.
+" https://github.com/c9s/perlomni.vim
+let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 
 " =============================================================================
