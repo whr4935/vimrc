@@ -75,6 +75,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dkprice/vim-easygrep'
 " Plugin 'fholgado/minibufexpl.vim'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -559,6 +560,14 @@ nmap <F3> :SrcExplToggle<CR>                "打开/闭浏览窗口
 
 " 启用 // 注视风格
 let c_cpp_comments = 0
+
+" -----------------------------------------------------------------------------
+"  < cpp_highlight 插件配置 >
+" -----------------------------------------------------------------------------
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
 
 " -----------------------------------------------------------------------------
 "  < surround 插件配置 >
