@@ -76,6 +76,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dkprice/vim-easygrep'
 " Plugin 'fholgado/minibufexpl.vim'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+Plugin 'milkypostman/vim-togglelist'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -466,21 +467,21 @@ noremap <c-l> <c-w>l
 " -----------------------------------------------------------------------------
 "  < quickfix 插件配置 >
 " -----------------------------------------------------------------------------
-nnoremap <leader>q :call QuickfixToggle()<CR>
+" nnoremap <leader>q :call QuickfixToggle()<CR>
 
-let g:quickfix_is_open = 0
+" let g:quickfix_is_open = 0
 
-function! QuickfixToggle()
-    if g:quickfix_is_open
-        cclose
-        let g:quickfix_is_open = 0
-        execute g:quickfix_return_to_window . "wincmd w"
-    else
-        let g:quickfix_return_to_window = winnr()
-        copen
-        let g:quickfix_is_open = 1
-    endif
-endfunction
+" function! QuickfixToggle()
+    " if g:quickfix_is_open
+        " cclose
+        " let g:quickfix_is_open = 0
+        " execute g:quickfix_return_to_window . "wincmd w"
+    " else
+        " let g:quickfix_return_to_window = winnr()
+        " copen
+        " let g:quickfix_is_open = 1
+    " endif
+" endfunction
 
 " -----------------------------------------------------------------------------
 "  < nerdcommenter 插件配置 >
