@@ -53,7 +53,7 @@ Plugin 'vim-javacompleteex'
 Plugin 'Mark--Karkat'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'Lokaltog/vim-powerline'
+" Plugin 'Lokaltog/vim-powerline'
 Plugin 'repeat.vim'
 Plugin 'msanders/snipmate.vim'
 Plugin 'wesleyche/SrcExpl'
@@ -71,6 +71,9 @@ Plugin 'Shougo/neocomplete.vim'
 " Plugin 'Shougo/neosnippet.vim'
 " Plugin 'Shougo/neosnippet-snippets'
 " Plugin 'honza/vim-snippets'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'dkprice/vim-easygrep'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -135,7 +138,8 @@ if g:islinux
 
 endif
 
-
+"==============================================================================
+let mapleader = ","
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
@@ -446,6 +450,11 @@ noremap <c-j> <c-w>j
 noremap <c-h> <c-w>h
 noremap <c-l> <c-w>l
 
+" -----------------------------------------------------------------------------
+"  < quickfix 插件配置 >
+" -----------------------------------------------------------------------------
+nnoremap <Leader>co :copen<CR>
+nnoremap <Leader>cc :cclose<CR>
 
 " -----------------------------------------------------------------------------
 "  < nerdcommenter 插件配置 >
@@ -491,6 +500,14 @@ endif
 "  < powerline 插件配置 >
 " -----------------------------------------------------------------------------
 " 状态栏插件，更好的状态栏效果
+
+" -----------------------------------------------------------------------------
+"  <airline 插件配置>
+" -----------------------------------------------------------------------------
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#left_sep = ' '
+" let g:airline#extensions#tabline#left_alt_sep = '|'
+
 
 " -----------------------------------------------------------------------------
 "  < repeat 插件配置 >
@@ -739,7 +756,6 @@ au BufRead,BufNewFile,BufEnter * cd %:p:h
 " 秒内，而<Leader>cs是先按"\"键再按"c"又再按"s"键；如要修改"<leader>"键，可以把
 " 下面的设置取消注释，并修改双引号中的键为你想要的，如修改为逗号键。
 "
-let mapleader = ","
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
