@@ -58,7 +58,7 @@ Plugin 'repeat.vim'
 Plugin 'msanders/snipmate.vim'
 Plugin 'wesleyche/SrcExpl'
 Plugin 'std_c.zip'
-Plugin 'tpope/vim-surround'
+" Plugin 'tpope/vim-surround'
 " Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'taglist.vim'
@@ -229,18 +229,18 @@ colorscheme Tomorrow-Night-Eighties               "终端配色方案
 """ -----------------------------------------------------------------------------
 """  < 新文件标题 >
 """ -----------------------------------------------------------------------------
-"""新建.c,.h,.sh,.java文件，自动插入文件头 
-""autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
-""""定义函数SetTitle，自动插入文件头 
-""func SetTitle() 
-""    "如果文件类型为.sh文件 
-""    if &filetype == 'sh' 
-""        call setline(1,"\#!/bin/bash") 
-""        call append(line("."), "") 
+"""新建.c,.h,.sh,.java文件，自动插入文件头
+""autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
+""""定义函数SetTitle，自动插入文件头
+""func SetTitle()
+""    "如果文件类型为.sh文件
+""    if &filetype == 'sh'
+""        call setline(1,"\#!/bin/bash")
+""        call append(line("."), "")
 ""    elseif &filetype == 'python'
 ""        call setline(1,"#!/usr/bin/env python")
 ""        call append(line("."),"# coding=utf-8")
-""        call append(line(".")+1, "") 
+""        call append(line(".")+1, "")
 ""
 ""    elseif &filetype == 'ruby'
 ""        call setline(1,"#!/usr/bin/env ruby")
@@ -249,13 +249,13 @@ colorscheme Tomorrow-Night-Eighties               "终端配色方案
 ""
 """    elseif &filetype == 'mkd'
 """        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
-""    else 
-""        call setline(1, "/*************************************************************************") 
-""        call append(line("."), "    > File Name: ".expand("%")) 
-""        call append(line(".")+1, "  > Author: Hou") 
-""        call append(line(".")+2, "  > Mail: 745189913@qq.com") 
-""        call append(line(".")+3, "  > Created Time: ".strftime("%c")) 
-""        call append(line(".")+4, " ************************************************************************/") 
+""    else
+""        call setline(1, "/*************************************************************************")
+""        call append(line("."), "    > File Name: ".expand("%"))
+""        call append(line(".")+1, "  > Author: Hou")
+""        call append(line(".")+2, "  > Mail: 745189913@qq.com")
+""        call append(line(".")+3, "  > Created Time: ".strftime("%c"))
+""        call append(line(".")+4, " ************************************************************************/")
 ""        call append(line(".")+5, "")
 ""    endif
 ""    if expand("%:e") == 'cpp'
@@ -277,7 +277,7 @@ colorscheme Tomorrow-Night-Eighties               "终端配色方案
 ""        call append(line(".")+7,"")
 ""    endif
 ""    "新建文件后，自动定位到文件末尾
-""endfunc 
+""endfunc
 ""autocmd BufNewFile * normal G
 ""
 "
@@ -453,8 +453,21 @@ noremap <c-l> <c-w>l
 " -----------------------------------------------------------------------------
 "  < quickfix 插件配置 >
 " -----------------------------------------------------------------------------
-nnoremap <Leader>co :copen<CR>
-nnoremap <Leader>cc :cclose<CR>
+nnoremap <leader>q :call QuickfixToggle()<CR>
+
+let g:quickfix_is_open = 0
+
+function! QuickfixToggle()
+    if g:quickfix_is_open
+        cclose
+        let g:quickfix_is_open = 0
+        execute g:quickfix_return_to_window . "wincmd w"
+    else
+        let g:quickfix_return_to_window = winnr()
+        copen
+        let g:quickfix_is_open = 1
+    endif
+endfunction
 
 " -----------------------------------------------------------------------------
 "  < nerdcommenter 插件配置 >
@@ -634,7 +647,7 @@ endif
 " -----------------------------------------------------------------------------
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
 " set tags=./tags;                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
-" map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>  
+" map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 " Ctags {
 set tags=./tags;/,~/.vimtags
 
