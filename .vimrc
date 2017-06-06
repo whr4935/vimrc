@@ -74,6 +74,7 @@ Plugin 'Shougo/neocomplete.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'dkprice/vim-easygrep'
+Plugin 'fholgado/minibufexpl.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -140,6 +141,11 @@ endif
 
 "==============================================================================
 let mapleader = ","
+
+" 设置快捷键将选中文本块复制至系统剪贴板
+vnoremap <Leader>y "+y
+" 设置快捷键将系统剪贴板内容粘贴至vim
+nmap <Leader>p "+p"
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
@@ -338,7 +344,13 @@ cmap w!! w !sudo tee % >/dev/null
 " <Leader>be 在当前窗口显示缓存列表并打开选定文件
 " <Leader>bs 水平分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
 " <Leader>bv 垂直分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
-"
+
+"-----------------------------------------------------------------------------
+" < BufExplorer 插件配置 >
+"-----------------------------------------------------------------------------
+" 显示/隐藏 MiniBufExplorer 窗口
+" map <Leader>bl :MBEToggle<cr>
+
 " -----------------------------------------------------------------------------
 "  < ccvext.vim 插件配置 >
 " -----------------------------------------------------------------------------
