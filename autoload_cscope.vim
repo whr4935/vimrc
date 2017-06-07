@@ -76,55 +76,55 @@ function s:Cycle_macros_menus()
       return
     endif
     let s:menus_loaded = 1
-    set csto=0
-    set cst
-    silent! map <unique> <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    silent! map <unique> <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    silent! map <unique> <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-    silent! map <unique> <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    silent! map <unique> <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-    silent! map <unique> <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    silent! map <unique> <C-\>f :cs find f <C-R>=expand("<cword>")<CR><CR>
-    silent! map <unique> <C-\>i :cs find i <C-R>=expand("<cword>")<CR><CR>
-    if has("menu")
-      nmenu &Cscope.Find.Symbol<Tab><c-\\>s
-        \ :cs find s <C-R>=expand("<cword>")<CR><CR>
-      nmenu &Cscope.Find.Definition<Tab><c-\\>g
-        \ :cs find g <C-R>=expand("<cword>")<CR><CR>
-      nmenu &Cscope.Find.Called<Tab><c-\\>d
-        \ :cs find d <C-R>=expand("<cword>")<CR><CR>
-      nmenu &Cscope.Find.Calling<Tab><c-\\>c
-        \ :cs find c <C-R>=expand("<cword>")<CR><CR>
-      nmenu &Cscope.Find.Assignment<Tab><c-\\>t
-        \ :cs find t <C-R>=expand("<cword>")<CR><CR>
-      nmenu &Cscope.Find.Egrep<Tab><c-\\>e
-        \ :cs find e <C-R>=expand("<cword>")<CR><CR>
-      nmenu &Cscope.Find.File<Tab><c-\\>f
-        \ :cs find f <C-R>=expand("<cword>")<CR><CR>
-      nmenu &Cscope.Find.Including<Tab><c-\\>i
-        \ :cs find i <C-R>=expand("<cword>")<CR><CR>
-"      nmenu &Cscope.Add :cs add 
-"      nmenu &Cscope.Remove  :cs kill 
-      nmenu &Cscope.Reset :cs reset<cr>
-      nmenu &Cscope.Show :cs show<cr>
-      " Need to figure out how to do the add/remove. May end up writing
-      " some container functions.  Or tossing them out, since this is supposed
-      " to all be automatic.
-    endif
+"     set csto=0
+    " set cst
+    " silent! map <unique> <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    " silent! map <unique> <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    " silent! map <unique> <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+    " silent! map <unique> <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    " silent! map <unique> <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    " silent! map <unique> <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    " silent! map <unique> <C-\>f :cs find f <C-R>=expand("<cword>")<CR><CR>
+    " silent! map <unique> <C-\>i :cs find i <C-R>=expand("<cword>")<CR><CR>
+    " if has("menu")
+      " nmenu &Cscope.Find.Symbol<Tab><c-\\>s
+        " \ :cs find s <C-R>=expand("<cword>")<CR><CR>
+      " nmenu &Cscope.Find.Definition<Tab><c-\\>g
+        " \ :cs find g <C-R>=expand("<cword>")<CR><CR>
+      " nmenu &Cscope.Find.Called<Tab><c-\\>d
+        " \ :cs find d <C-R>=expand("<cword>")<CR><CR>
+      " nmenu &Cscope.Find.Calling<Tab><c-\\>c
+        " \ :cs find c <C-R>=expand("<cword>")<CR><CR>
+      " nmenu &Cscope.Find.Assignment<Tab><c-\\>t
+        " \ :cs find t <C-R>=expand("<cword>")<CR><CR>
+      " nmenu &Cscope.Find.Egrep<Tab><c-\\>e
+        " \ :cs find e <C-R>=expand("<cword>")<CR><CR>
+      " nmenu &Cscope.Find.File<Tab><c-\\>f
+        " \ :cs find f <C-R>=expand("<cword>")<CR><CR>
+      " nmenu &Cscope.Find.Including<Tab><c-\\>i
+        " \ :cs find i <C-R>=expand("<cword>")<CR><CR>
+" "      nmenu &Cscope.Add :cs add 
+" "      nmenu &Cscope.Remove  :cs kill 
+      " nmenu &Cscope.Reset :cs reset<cr>
+      " nmenu &Cscope.Show :cs show<cr>
+      " " Need to figure out how to do the add/remove. May end up writing
+      " " some container functions.  Or tossing them out, since this is supposed
+      " " to all be automatic.
+    " endif
   else
     let s:menus_loaded = 0
-    set nocst
-    silent! unmap <C-\>s
-    silent! unmap <C-\>g
-    silent! unmap <C-\>d
-    silent! unmap <C-\>c
-    silent! unmap <C-\>t
-    silent! unmap <C-\>e
-    silent! unmap <C-\>f
-    silent! unmap <C-\>i
-    if has("menu")  " would rather see if the menu exists, then remove...
-      silent! nunmenu Cscope
-    endif
+"     set nocst
+    " silent! unmap <C-\>s
+    " silent! unmap <C-\>g
+    " silent! unmap <C-\>d
+    " silent! unmap <C-\>c
+    " silent! unmap <C-\>t
+    " silent! unmap <C-\>e
+    " silent! unmap <C-\>f
+    " silent! unmap <C-\>i
+    " if has("menu")  " would rather see if the menu exists, then remove...
+      " silent! nunmenu Cscope
+    " endif
   endif
 endfunc
 "
@@ -135,9 +135,9 @@ function s:Unload_csdb()
   if exists("b:csdbpath")
     if cscope_connection(3, "out", b:csdbpath)
       let save_csvb = &csverb
-      set nocsverb
+      " set nocsverb
       exe "cs kill " . b:csdbpath
-      set csverb
+      " set csverb
       let &csverb = save_csvb
     endif
   endif
@@ -147,6 +147,10 @@ endfunc
 " Cycle_csdb
 "  cycle the loaded cscope db.
 function s:Cycle_csdb()
+    " if exists(g:has_csdbath)
+        " return
+    " endif
+
     if exists("b:csdbpath")
       if cscope_connection(3, "out", b:csdbpath)
         return
@@ -158,6 +162,7 @@ function s:Cycle_csdb()
 "    echo "Windowdir: " . s:windowdir()
     if newcsdbpath != "Nothing"
       let b:csdbpath = newcsdbpath
+      let g:has_csdbath = 1
       if !cscope_connection(3, "out", b:csdbpath)
         let save_csvb = &csverb
         set nocsverb
@@ -167,7 +172,7 @@ function s:Cycle_csdb()
       endif
       "
     else " No cscope database, undo things. (someone rm-ed it or somesuch)
-      call s:Unload_csdb()
+      " call s:Unload_csdb()
     endif
 endfunc
 
