@@ -647,12 +647,12 @@ if has("cscope")
     "如果你想反向搜索顺序设置为1
     set csto=0
     "在当前目录中添加任何数据库
-    if filereadable("cscope.out")
-        cs add cscope.out
-        "否则添加数据库环境中所指出的
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
-    endif
+    " if filereadable("cscope.out")
+        " cs add cscope.out
+        " "否则添加数据库环境中所指出的
+    " elseif $CSCOPE_DB != ""
+        " cs add $CSCOPE_DB
+    " endif
     set cscopeverbose
     "快捷键设置
     nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>

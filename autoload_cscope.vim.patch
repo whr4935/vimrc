@@ -1,7 +1,16 @@
 diff --git a/plugin/autoload_cscope.vim b/plugin/autoload_cscope.vim
-index 6e8d96d..247e3d7 100644
+index 6e8d96d..79a32d9 100644
 --- a/plugin/autoload_cscope.vim
 +++ b/plugin/autoload_cscope.vim
+@@ -161,7 +161,7 @@ function s:Cycle_csdb()
+       if !cscope_connection(3, "out", b:csdbpath)
+         let save_csvb = &csverb
+         set nocsverb
+-        exe "cs add " . b:csdbpath . "/cscope.out " . b:csdbpath
++        exe "cs add " . b:csdbpath . "/cscope.out " . b:csdbpath "-C"
+         set csverb
+         let &csverb = save_csvb
+       endif
 @@ -174,10 +174,12 @@ endfunc
  " auto toggle the menu
  augroup autoload_cscope
