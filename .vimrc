@@ -77,6 +77,7 @@ Plugin 'dkprice/vim-easygrep'
 " Plugin 'fholgado/minibufexpl.vim'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'milkypostman/vim-togglelist'
+Plugin 'vim-scripts/autoload_cscope.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
