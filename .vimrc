@@ -644,8 +644,10 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
 if has("cscope")
     "设定可以使用 quickfix 窗口来查看 cscope 结果
+    "vertical  help cscope-options
     set cscopequickfix=s-,c-,d-,i-,t-,e-
     "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
+    set cst
     set cscopetag
     "如果你想反向搜索顺序设置为1
     set csto=0
@@ -672,16 +674,18 @@ endif
 "  < ctags 工具配置 >
 " -----------------------------------------------------------------------------
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
-" set tags=./tags;                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
-" map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+set autochdir
+set tags=./tags;                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
+map <C-F12> :!ctags -R --c++-kinds=+px --fields=+iaS --extra=+q .<CR>
 " Ctags {
-set tags=./tags;/,~/.vimtags
+" set tags=./tags;/,~/.vimtags
 
 " Make tags placed in .git/tags file available in all levels of a repository
-let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
-if gitroot != ''
-    let &tags = &tags . ',' . gitroot . '/.git/tags'
-endif
+" let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+" if gitroot != ''
+    " let &tags = &tags . ',' . gitroot . '/.git/tags'
+" set tags=./tags;/,~/.vimtags
+" endif
 " }
 
 " -----------------------------------------------------------------------------
@@ -784,7 +788,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " =============================================================================
 
 " 自动切换目录为当前编辑文件所在目录
-au BufRead,BufNewFile,BufEnter * cd %:p:h
+" au BufRead,BufNewFile,BufEnter * cd %:p:h
 
 
 " =============================================================================
