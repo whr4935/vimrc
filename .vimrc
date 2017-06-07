@@ -153,6 +153,9 @@ nmap <Leader>p "+p"
 
 set wildmenu
 
+" 让配置变更立即生效
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
 " -----------------------------------------------------------------------------
@@ -238,61 +241,58 @@ set shortmess=atI                                     "去掉欢迎界面
 colorscheme Tomorrow-Night-Eighties               "终端配色方案
 
 
-""" -----------------------------------------------------------------------------
-"""  < 新文件标题 >
-""" -----------------------------------------------------------------------------
-"""新建.c,.h,.sh,.java文件，自动插入文件头
-""autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
-""""定义函数SetTitle，自动插入文件头
-""func SetTitle()
-""    "如果文件类型为.sh文件
-""    if &filetype == 'sh'
-""        call setline(1,"\#!/bin/bash")
-""        call append(line("."), "")
-""    elseif &filetype == 'python'
-""        call setline(1,"#!/usr/bin/env python")
-""        call append(line("."),"# coding=utf-8")
-""        call append(line(".")+1, "")
-""
-""    elseif &filetype == 'ruby'
-""        call setline(1,"#!/usr/bin/env ruby")
-""        call append(line("."),"# encoding: utf-8")
-""        call append(line(".")+1, "")
-""
-"""    elseif &filetype == 'mkd'
-"""        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
-""    else
-""        call setline(1, "/*************************************************************************")
-""        call append(line("."), "    > File Name: ".expand("%"))
-""        call append(line(".")+1, "  > Author: Hou")
-""        call append(line(".")+2, "  > Mail: 745189913@qq.com")
-""        call append(line(".")+3, "  > Created Time: ".strftime("%c"))
-""        call append(line(".")+4, " ************************************************************************/")
-""        call append(line(".")+5, "")
-""    endif
-""    if expand("%:e") == 'cpp'
-""        call append(line(".")+6, "#include<iostream>")
-""        call append(line(".")+7, "using namespace std;")
-""        call append(line(".")+8, "")
-""    endif
-""    if &filetype == 'c'
-""        call append(line(".")+6, "#include<stdio.h>")
-""        call append(line(".")+7, "")
-""    endif
-""    if expand("%:e") == 'h'
-""        call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
-""        call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
-""        call append(line(".")+8, "#endif")
-""    endif
-""    if &filetype == 'java'
-""        call append(line(".")+6,"public class ".expand("%:r"))
-""        call append(line(".")+7,"")
-""    endif
-""    "新建文件后，自动定位到文件末尾
-""endfunc
-""autocmd BufNewFile * normal G
-""
-"
+" -----------------------------------------------------------------------------
+"  < 新文件标题 >
+" -----------------------------------------------------------------------------
+"新建.c,.h,.sh,.java文件，自动插入文件头
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
+""定义函数SetTitle，自动插入文件头
+func SetTitle()
+   "如果文件类型为.sh文件
+   if &filetype == 'sh'
+       call setline(1,"\#!/bin/bash")
+       call append(line("."), "")
+   elseif &filetype == 'python'
+       call setline(1,"#!/usr/bin/env python")
+       call append(line("."),"# coding=utf-8")
+       call append(line(".")+1, "")
+
+   elseif &filetype == 'ruby'
+       call setline(1,"#!/usr/bin/env ruby")
+       call append(line("."),"# encoding: utf-8")
+       call append(line(".")+1, "")
+"    elseif &filetype == 'mkd'
+"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
+   else
+       call setline(1,          "/*************************************************************************")
+       call append(line("."),   " > File Name: ".expand("%"))
+       call append(line(".")+1, " > Created Time: ".strftime("%c"))
+       call append(line(".")+2, " ************************************************************************/")
+       call append(line(".")+3, "")
+   endif
+   if expand("%:e") == 'cpp'
+       " call append(line(".")+6, "#include<iostream>")
+       " call append(line(".")+7, "using namespace std;")
+       " call append(line(".")+8, "")
+   endif
+   if &filetype == 'c'
+       " call append(line(".")+6, "#include<stdio.h>")
+       " call append(line(".")+7, "")
+   endif
+   if expand("%:e") == 'h'
+       call append(line(".")+4, "#ifndef _".toupper(expand("%:r"))."_H")
+       call append(line(".")+5, "#define _".toupper(expand("%:r"))."_H")
+       call append(line(".")+6, "#endif")
+   endif
+   if &filetype == 'java'
+       call append(line(".")+4,"public class ".expand("%:r"))
+       call append(line(".")+5,"")
+   endif
+   "新建文件后，自动定位到文件末尾
+endfunc
+autocmd BufNewFile * normal G
+
+
 " -----------------------------------------------------------------------------
 "  < 其它配置 >
 " -----------------------------------------------------------------------------
