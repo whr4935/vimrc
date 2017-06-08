@@ -389,7 +389,7 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
     " nnoremap <silent> <D-r> :CtrlPMRU<CR>
     let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
-                \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
+                \ 'file': '\.exe$\|\.so$\|\.o$\|\.dll$\|\.pyc$' }
 
     if executable('ag')
         let s:ctrlp_fallback = 'ag %s --nocolor -l -g ""'
