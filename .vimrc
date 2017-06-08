@@ -303,7 +303,7 @@ set noswapfile                              "设置无临时文件
 set vb t_vb=                                "关闭提示音
 
 " Find merge conflict markers
-map <leader>fc /\v^[<\|=>]{7}( .*\|$ )<CR>
+" map <leader>fc /\v^[<\|=>]{7}( .*\|$ )<CR>
 
 " Shortcuts
 " Change Working Directory to that of the current file
@@ -385,6 +385,7 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
     let g:ctrlp_cmd = 'CtrlP'
     " let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_working_path_mode = 0
+    let g:ctrlp_use_caching = 1
     " nnoremap <silent> <D-t> :CtrlP<CR> //D是mac系统中的功能键
     " nnoremap <silent> <D-r> :CtrlPMRU<CR>
     let g:ctrlp_custom_ignore = {
