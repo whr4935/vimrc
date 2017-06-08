@@ -47,6 +47,7 @@ Plugin 'bufexplorer.zip'
 Plugin 'ccvext.vim'
 Plugin 'cSyntaxAfter'
 Plugin 'ctrlpvim/ctrlp.vim'
+Bundle 'tacahiroy/ctrlp-funky'
 Plugin 'mattn/emmet-vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'vim-javacompleteex'
@@ -380,9 +381,12 @@ au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript} call CSyntaxAfter()
 " 常规模式下输入：Ctrl + p 调用插件
 " ctrlp {
 if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
-    let g:ctrlp_working_path_mode = 'ra'
-    nnoremap <silent> <D-t> :CtrlP<CR>
-    nnoremap <silent> <D-r> :CtrlPMRU<CR>
+    let g:ctrlp_map = '<leader>f'
+    let g:ctrlp_cmd = 'CtrlP'
+    " let g:ctrlp_working_path_mode = 'ra'
+    let g:ctrlp_working_path_mode = 0
+    " nnoremap <silent> <D-t> :CtrlP<CR> //D是mac系统中的功能键
+    " nnoremap <silent> <D-r> :CtrlPMRU<CR>
     let g:ctrlp_custom_ignore = {
                 \ 'dir':  '\.git$\|\.hg$\|\.svn$',
                 \ 'file': '\.exe$\|\.so$\|\.dll$\|\.pyc$' }
@@ -415,7 +419,10 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
         let g:ctrlp_extensions = ['funky']
 
         "funky
-        nnoremap <Leader>fu :CtrlPFunky<Cr>
+        " nnoremap <Leader>fu :CtrlPFunky<Cr>
+        " narrow the list down with a word under cursor
+        " nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+        let g:ctrlp_funky_syntax_highlight = 1
     endif
 endif
 "}
@@ -674,8 +681,8 @@ endif
 "  < ctags 工具配置 >
 " -----------------------------------------------------------------------------
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
-set autochdir
-set tags=./tags;                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
+" set autochdir
+set tags=./tags,tags;~                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
 map <C-F12> :!ctags -R --c++-kinds=+px --fields=+iaS --extra=+q .<CR>
 " Ctags {
 " set tags=./tags;/,~/.vimtags
@@ -775,8 +782,8 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
 endif
 "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+" let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+" let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
