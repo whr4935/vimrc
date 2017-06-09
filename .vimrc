@@ -638,9 +638,11 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " 用于C C++ objectC的自动补全和文件路径自动补全等
 "let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 
-
-
-
+" -----------------------------------------------------------------------------
+"  < EasyGrep 插件配置 >
+" -----------------------------------------------------------------------------
+let g:EasyGrepMode = 1 "search Buffer
+let g:EasyGrepCommand = 1 "use grep command instead of vimgrep
 
 " =============================================================================
 "                          << 以下为常用工具配置 >>
