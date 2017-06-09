@@ -660,7 +660,7 @@ endif
 let g:clang_format#code_style = "google"
 let g:clang_format#style_options = {
             \ "AccessModifierOffset" : -4,
-            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AllowShortIfStatementsOnASingleLine" : "false",
             \ "AlwaysBreakTemplateDeclarations" : "true",
             \ "AllowShortFunctionsOnASingleLine" : "None",
             \ "IndentCaseLabels" : "false",
