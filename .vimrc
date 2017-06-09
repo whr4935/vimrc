@@ -642,7 +642,12 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 "  < EasyGrep 插件配置 >
 " -----------------------------------------------------------------------------
 let g:EasyGrepMode = 1 "search Buffer
-let g:EasyGrepCommand = 1 "use grep command instead of vimgrep
+let g:EasyGrepCommand = 1 "don't use vimgrep
+
+" apt-get install silversearcher-ag
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
 
 " =============================================================================
 "                          << 以下为常用工具配置 >>
