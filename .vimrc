@@ -641,7 +641,10 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " -----------------------------------------------------------------------------
 "  < EasyGrep 插件配置 >
 " -----------------------------------------------------------------------------
-let g:EasyGrepMode = 1 "search Buffer
+" set default mode
+" let g:EasyGrepMode = 1 "search Buffer
+let g:EasyGrepRecursive = 1 "recursive search all files 
+
 let g:EasyGrepCommand = 1 "don't use vimgrep
 
 " apt-get install silversearcher-ag
