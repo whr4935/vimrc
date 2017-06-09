@@ -1,15 +1,15 @@
-set nocompatible
-filetype on
-set number
-set autoindent
-set smartindent
-set showmatch
-set ruler
-set incsearch
-set cindent
-set nobackup
-set clipboard+=unnamed
-syntax on
+" set nocompatible
+" filetype on
+" set number
+" set autoindent
+" set smartindent
+" set showmatch
+" set ruler
+" set incsearch
+" " set cindent
+" set nobackup
+" set clipboard+=unnamed
+" syntax on
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
@@ -41,10 +41,10 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
 Plugin 'a.vim'
-Plugin 'Align'
+" Plugin 'Align'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'bufexplorer.zip'
-Plugin 'ccvext.vim'
+" Plugin 'ccvext.vim'
 Plugin 'cSyntaxAfter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
@@ -63,10 +63,10 @@ Plugin 'std_c.zip'
 " Plugin 'scrooloose/syntastic'
 Plugin 'majutsushi/tagbar'
 Plugin 'taglist.vim'
-Plugin 'TxtBrowser'
+" Plugin 'TxtBrowser'
 Plugin 'ZoomWin'
 " Plugin 'Valloric/YouCompleteMe'
-Plugin 'Raimondi/delimitMate'
+" Plugin 'Raimondi/delimitMate'
 " Plugin 'aceofall/gtags.vim'
 Plugin 'Shougo/neocomplete.vim'
 " Plugin 'Shougo/neosnippet.vim'
@@ -79,6 +79,8 @@ Plugin 'dkprice/vim-easygrep'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 Plugin 'milkypostman/vim-togglelist'
 Plugin 'vim-scripts/autoload_cscope.vim'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'kana/vim-operator-user'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -643,7 +645,7 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " -----------------------------------------------------------------------------
 " set default mode
 " let g:EasyGrepMode = 1 "search Buffer
-let g:EasyGrepRecursive = 1 "recursive search all files 
+let g:EasyGrepRecursive = 1 "recursive search all files
 let g:EasyGrepWindowPosition = "bot"  "open quickfix window bottom
 
 let g:EasyGrepCommand = 1 "don't use vimgrep
@@ -651,6 +653,28 @@ let g:EasyGrepCommand = 1 "don't use vimgrep
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 endif
+
+" -----------------------------------------------------------------------------
+"  < vim-clang-format 插件配置 >
+" -----------------------------------------------------------------------------
+let g:clang_format#code_style = "google"
+let g:clang_format#style_options = {
+            \ "AccessModifierOffset" : -4,
+            \ "AllowShortIfStatementsOnASingleLine" : "true",
+            \ "AlwaysBreakTemplateDeclarations" : "true",
+            \ "IndentCaseLabels" : "false",
+            \ "BreakBeforeBraces" : "Linux",
+            \ "Standard" : "C++11"}
+
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+" autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+" nmap <Leader>C :ClangFormatAutoToggle<CR>
+
+autocmd FileType c,cpp ClangFormatAutoEnable
 
 " =============================================================================
 "                          << 以下为常用工具配置 >>
