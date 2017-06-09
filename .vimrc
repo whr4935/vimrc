@@ -644,9 +644,9 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " set default mode
 " let g:EasyGrepMode = 1 "search Buffer
 let g:EasyGrepRecursive = 1 "recursive search all files 
+let g:EasyGrepWindowPosition = "bot"  "open quickfix window bottom
 
 let g:EasyGrepCommand = 1 "don't use vimgrep
-
 " apt-get install silversearcher-ag
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
