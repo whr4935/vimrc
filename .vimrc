@@ -244,16 +244,16 @@ set nowrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 
 " 设置代码配色方案
-" colorscheme Tomorrow-Night-Eighties               "终端配色方案
+colorscheme Tomorrow-Night-Eighties               "终端配色方案
 
 " colorscheme molokai
 " let g:molokai_original = 1
 " let g:rehash256 = 1
 
-let g:solarized_termcolors=256
-set t_Co=256
-set background=dark
-colorscheme solarized
+" let g:solarized_termcolors=256
+" set t_Co=256
+" set background=dark
+" colorscheme solarized
 
 " -----------------------------------------------------------------------------
 "  < 新文件标题 >
