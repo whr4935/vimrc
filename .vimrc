@@ -81,6 +81,7 @@ Plugin 'milkypostman/vim-togglelist'
 Plugin 'vim-scripts/autoload_cscope.vim'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'kana/vim-operator-user'
+" Plugin 'Chiel92/vim-autoformat'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -177,7 +178,7 @@ set fileformats=unix,dos,mac                          "给出文件的<EOL>格�
 filetype on                                           "启用文件类型侦测
 filetype plugin on                                    "针对不同的文件类型加载对应的插件
 filetype plugin indent on                             "启用缩进
-set smartindent                                       "启用智能对齐方式
+" set smartindent                                       "启用智能对齐方式
 set expandtab                                         "将Tab键转换为空格
 set tabstop=4                                         "设置Tab键的宽度，可以更改，如：宽度为2
 set shiftwidth=4                                      "换行时自动缩进宽度，可更改（宽度同tabstop）
@@ -187,7 +188,7 @@ set foldmethod=indent                                 "indent 折叠方式
 set foldlevel=9999                                    " 折叠的层次，打开文件时默认不折叠
 
 " 常规模式下用空格键来开关光标行所在折叠（注：zR 展开所有折叠，zM 关闭所有折叠）
-nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+" nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 " 当文件在外部被修改，自动更新该文件
 set autoread
@@ -374,7 +375,7 @@ cmap w!! w !sudo tee % >/dev/null
 "  < cSyntaxAfter 插件配置 >
 " -----------------------------------------------------------------------------
 " 高亮括号与运算符等
-au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript} call CSyntaxAfter()
+" au! BufRead,BufNewFile,BufEnter *.{c,cpp,h,java,javascript} call CSyntaxAfter()
 
 " -----------------------------------------------------------------------------
 "  < ctrlp.vim 插件配置 >
@@ -657,6 +658,9 @@ endif
 " -----------------------------------------------------------------------------
 "  < vim-clang-format 插件配置 >
 " -----------------------------------------------------------------------------
+let g:clang_format#auto_format = 0
+let g:clang_format#auto_formatexpr = 1
+
 let g:clang_format#code_style = "google"
 let g:clang_format#style_options = {
             \ "AccessModifierOffset" : -4,
@@ -668,14 +672,17 @@ let g:clang_format#style_options = {
             \ "Standard" : "C++11"}
 
 " map to <Leader>cf in C++ code
-autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+" autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+" autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+
 " if you install vim-operator-user
 " autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
+autocmd FileType c,cpp,objc map <buffer> = <Plug>(operator-clang-format)  
+
 " Toggle auto formatting:
 " nmap <Leader>C :ClangFormatAutoToggle<CR>
 
-autocmd FileType c,cpp ClangFormatAutoEnable
+" autocmd FileType c,cpp ClangFormatAutoEnable
 
 " =============================================================================
 "                          << 以下为常用工具配置 >>
@@ -842,6 +849,6 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " 秒内，而<Leader>cs是先按"\"键再按"c"又再按"s"键；如要修改"<leader>"键，可以把
 " 下面的设置取消注释，并修改双引号中的键为你想要的，如修改为逗号键。
 "
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 
