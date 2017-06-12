@@ -539,7 +539,7 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
 
     let NERDTreeShowBookmarks=1
     let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-    let NERDTreeChDirMode=2 "use NERDTree to change the CWD
+    let NERDTreeChDirMode=0 
     let NERDTreeQuitOnOpen=1
     let NERDTreeMouseMode=2
     let NERDTreeShowHidden=1
