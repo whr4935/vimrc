@@ -678,6 +678,7 @@ let g:clang_format#style_options = {
             \ "AlwaysBreakTemplateDeclarations" : "true",
             \ "AllowShortFunctionsOnASingleLine" : "None",
             \ "ColumnLimit" : 0,
+            \ "KeepEmptyLinesAtTheStartOfBlocks" : "true",
             \ "IndentCaseLabels" : "false",
             \ "BreakBeforeBraces" : "Linux",
             \ "Standard" : "C++11"}
