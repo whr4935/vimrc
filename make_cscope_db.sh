@@ -43,7 +43,13 @@ for i in $@;do
 done
 
 
-find $PWD -path .git -prune -o -name "*.h" -o -name "*.hpp" -o -name "*.c"-o -name "*.cc" -o -name "*.cpp" > cscope.files
+find $PWD -path .git  -prune \
+    -o -name "*.h"    -print \
+    -o -name "*.hpp"  -print \
+    -o -name "*.c"    -print \
+    -o -name "*.cc"   -print \
+    -o -name "*.cpp" > cscope.files
+
 if [ -n "$args"  ];then
     echo "extra args:\n  $args"
 fi
