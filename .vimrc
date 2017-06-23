@@ -51,7 +51,7 @@ Bundle 'tacahiroy/ctrlp-funky'
 Plugin 'mattn/emmet-vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'vim-javacompleteex'
-Plugin 'Mark--Karkat'
+" Plugin 'Mark--Karkat'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'Lokaltog/vim-powerline'
@@ -161,8 +161,23 @@ set wildmenu
 
 set makeprg=g++\ -g\ -Wall\ -o\ %:r\ %
 
+"让*号高亮时不跳转到下一个
+" nnoremap <silent> * :execute "normal! *N"<cr>
+nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+
+set guioptions+=a
+function! MakePattern(text)
+  let pat = escape(a:text, '\')
+  let pat = substitute(pat, '\_s\+$', '\\s\\*', '')
+  let pat = substitute(pat, '^\_s\+', '\\s\\*', '')
+  let pat = substitute(pat, '\_s\+',  '\\_s\\+', 'g')
+  return '\\V' . escape(pat, '\"')
+endfunction
+vnoremap <silent> * :<C-U>let @/="<C-R>=MakePattern(@*)<CR>"<CR>:set hls<CR>
+
+
 " 让配置变更立即生效
-autocmd BufWritePost $MYVIMRC source $MYVIMRC
+" autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
