@@ -51,7 +51,8 @@ find $PWD -path .git  -prune \
     -o -name "*.hpp"  -print \
     -o -name "*.c"    -print \
     -o -name "*.cc"   -print \
-    -o -name "*.cpp" > cscope.files
+    -o -name "*.cpp"  -print \
+    > cscope.files
 
 
 if [ -n "$args"  ];then
