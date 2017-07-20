@@ -672,7 +672,7 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 "  < EasyGrep 插件配置 >
 " -----------------------------------------------------------------------------
 " set default mode
-" let g:EasyGrepMode = 1 "search Buffer
+let g:EasyGrepMode = 1 "search Buffer
 let g:EasyGrepRecursive = 1 "recursive search all files
 let g:EasyGrepWindowPosition = "bot"  "open quickfix window bottom
 
