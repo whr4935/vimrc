@@ -84,6 +84,7 @@ Plugin 'vim-scripts/autoload_cscope.vim'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'kana/vim-operator-user'
 " Plugin 'Chiel92/vim-autoformat'
+Plugin 'davidhalter/jedi-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -846,7 +847,7 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal omnifunc=jedi#completions
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " Enable heavy omni completion.
@@ -861,6 +862,15 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
+
+
+" -----------------------------------------------------------------------------
+" jedi python补全插件
+" -----------------------------------------------------------------------------
+let g:jedi#popup_select_first=0
+set completeopt=longest,menuone
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#popup_on_dot = 0
 
 " =============================================================================
 "                          << 以下为常用自动命令配置 >>
