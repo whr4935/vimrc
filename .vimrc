@@ -160,8 +160,25 @@ nmap <Leader>p "+p"
 
 set wildmenu
 
-autocmd FileType c,cpp  set makeprg=g++\ -g\ -Wall\ -o\ %:r\ %
-autocmd FileType python set makeprg=python\ %
+let g:firstSetMakeCpp=0
+autocmd FileType c,cpp exec ":call SetMakeprgCpp()"
+func SetMakeprgCpp()
+    if g:firstSetMakeCpp == 0
+        set makeprg=g++\ -g\ -Wall\ -o\ %:r\ %
+        let g:firstSetMakeCpp=1
+        let g:firstSetMakePython=0
+    endif
+endfunc
+
+let g:firstSetMakePython=0
+autocmd FileType python exec ":call SetMakeprgPython()"
+func SetMakeprgPython()
+    if g:firstSetMakePython == 0
+        set makeprg=python\ %
+        let g:firstSetMakePython=1
+        let g:firstSetMakeCpp=0
+    endif
+endfunc
 
 "让*号高亮时不跳转到下一个
 " nnoremap <silent> * :execute "normal! *N"<cr>
