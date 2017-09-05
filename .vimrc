@@ -160,7 +160,8 @@ nmap <Leader>p "+p"
 
 set wildmenu
 
-set makeprg=g++\ -g\ -Wall\ -o\ %:r\ %
+autocmd FileType c,cpp  set makeprg=g++\ -g\ -Wall\ -o\ %:r\ %
+autocmd FileType python set makeprg=python\ %
 
 "让*号高亮时不跳转到下一个
 " nnoremap <silent> * :execute "normal! *N"<cr>
