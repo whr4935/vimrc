@@ -164,7 +164,7 @@ let g:firstSetMakeCpp=0
 autocmd FileType c,cpp exec ":call SetMakeprgCpp()"
 func SetMakeprgCpp()
     if g:firstSetMakeCpp == 0
-        set makeprg=g++\ -g\ -Wall\ -o\ %:r\ %
+        set makeprg=g++\ -g\ -std=c++11\ -Wall\ -o\ %:r\ %
         let g:firstSetMakeCpp=1
         let g:firstSetMakePython=0
     endif
