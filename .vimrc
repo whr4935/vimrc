@@ -49,7 +49,7 @@ Plugin 'cSyntaxAfter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
 Plugin 'mattn/emmet-vim'
-Plugin 'Yggdroot/indentLine'
+" Plugin 'Yggdroot/indentLine'
 " Plugin 'vim-javacompleteex'
 " Plugin 'Mark--Karkat'
 Plugin 'scrooloose/nerdcommenter'
@@ -85,6 +85,9 @@ Plugin 'rhysd/vim-clang-format'
 Plugin 'kana/vim-operator-user'
 " Plugin 'Chiel92/vim-autoformat'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'suan/vim-instant-markdown'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -889,6 +892,16 @@ let g:jedi#popup_select_first=0
 set completeopt=longest,menuone
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
+
+" -----------------------------------------------------------------------------
+"  markdown
+" -----------------------------------------------------------------------------
+let g:vim_markdown_no_extensions_in_markdown = 1
+
+
+" instant-markdown
+let g:instant_markdown_open_to_the_world = 1
+let g:instant_markdown_allow_unsafe_content = 1
 
 " =============================================================================
 "                          << 以下为常用自动命令配置 >>
