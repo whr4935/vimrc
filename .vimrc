@@ -49,7 +49,7 @@ Plugin 'cSyntaxAfter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
 Plugin 'mattn/emmet-vim'
-" Plugin 'Yggdroot/indentLine'
+" Plugin 'Yggdroot/indentLine' "cause stutter
 " Plugin 'vim-javacompleteex'
 " Plugin 'Mark--Karkat'
 Plugin 'scrooloose/nerdcommenter'
