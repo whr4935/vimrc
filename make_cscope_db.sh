@@ -1,7 +1,7 @@
 #!/bin/sh
 # add arguments for extra include path.
 
-kernel_mode=1   #kernel_mode doesn't serach system include path.
+kernel_mode=0   #kernel_mode doesn't serach system include path.
 cscope_arg=-bqk
 
 while test $# != 0
