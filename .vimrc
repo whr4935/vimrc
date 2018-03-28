@@ -170,7 +170,7 @@ func SetMakeprgCpp()
         if filereadable("Makefile") || filereadable("makefile")
             set makeprg=make
         else
-            set makeprg=g++\ -g\ -std=c++11\ -Wall\ -pthread\ -o\ %:r\ %
+            set makeprg=g++\ -g\ -std=c++11\ -Wall\ -Werror\ -pthread\ -o\ %:r\ %
         endif
         let g:firstSetMakeCpp=1
         let g:firstSetMakePython=0
