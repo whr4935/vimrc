@@ -220,6 +220,7 @@ func! StartDebug(prog)
 
     echom a:p
     execute "!cgdb" a:p
+    sleep 100m
 endfunc
 nmap <silent> <F5> :call StartDebug(expand("%:t:r"))<CR><CR>
 
