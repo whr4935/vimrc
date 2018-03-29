@@ -201,6 +201,8 @@ function! MakePattern(text)
 endfunction
 vnoremap <silent> * :<C-U>let @/="<C-R>=MakePattern(@*)<CR>"<CR>:set hls<CR>
 
+" 在word上加上引号
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 
 " 让配置变更立即生效
 " autocmd BufWritePost $MYVIMRC source $MYVIMRC
@@ -787,7 +789,14 @@ endif
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
 " set autochdir
 set tags=./tags,tags;~                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
-map <C-F12> :!ctags -R --c++-kinds=+px --fields=+iaS --extra=+q .<CR>
+" map <C-F12> :!ctags -R --c++-kinds=+px --fields=+iaS --extra=+q .<CR>
+
+func! Update_cscope()
+    call system("make_cscope_db.sh -n")
+    silent cs reset
+    echo "update tags success!"
+endfunc
+nmap <silent> <F4> :call Update_cscope()<CR>
 " Ctags {
 " set tags=./tags;/,~/.vimtags
 
