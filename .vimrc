@@ -328,7 +328,7 @@ func SetTitle()
        call append(line(".")+3, "")
    endif
    if expand("%:e") == 'cpp'
-       call append(line(".")+4, "#include<iostream>")
+       call append(line(".")+4, "#include <iostream>")
        call append(line(".")+5, "")
        call append(line(".")+6, "")
        call append(line(".")+7, "int main(int argc, char** argv)")
