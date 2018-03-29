@@ -218,6 +218,7 @@ func! StartDebug(prog)
         endif
     endif
 
+    echom a:p
     execute "!cgdb" a:p
 endfunc
 nmap <silent> <F5> :call StartDebug(expand("%:t:r"))<CR><CR>
@@ -232,6 +233,7 @@ func! StartExecute(prog)
         endif
     endif
 
+    echo a:p
     execute "!./" . a:p
 endfunc
 nmap <silent> <F7> :call StartExecute(expand("%:t:r"))<CR>
