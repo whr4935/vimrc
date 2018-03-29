@@ -207,6 +207,35 @@ nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 " 让配置变更立即生效
 " autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
+" f5 调试，f7运行
+func! StartDebug(prog)
+    let a:p = a:prog
+    if !filereadable(a:p)
+        let a:p = "build/" . a:prog
+        if !filereadable(a:p)
+            echo "no executable"
+            return
+        endif
+    endif
+
+    execute "!cgdb" a:p
+endfunc
+nmap <silent> <F5> :call StartDebug(expand("%:t:r"))<CR><CR>
+
+func! StartExecute(prog)
+    let a:p = a:prog
+    if !filereadable(a:p)
+        let a:p = "build/" . a:prog
+        if !filereadable(a:p)
+            echo "no executable"
+            return
+        endif
+    endif
+
+    execute "!./" . a:p
+endfunc
+nmap <silent> <F7> :call StartExecute(expand("%:t:r"))<CR>
+
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
 " -----------------------------------------------------------------------------
@@ -590,7 +619,7 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
 
     let NERDTreeShowBookmarks=1
     let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
-    let NERDTreeChDirMode=0 
+    let NERDTreeChDirMode=0
     let NERDTreeQuitOnOpen=1
     let NERDTreeMouseMode=2
     let NERDTreeShowHidden=1
@@ -740,7 +769,7 @@ let g:clang_format#style_options = {
 
 " if you install vim-operator-user
 " autocmd FileType c,cpp,objc map <buffer><Leader>x <Plug>(operator-clang-format)
-autocmd FileType c,cpp,objc map <buffer> = <Plug>(operator-clang-format)  
+autocmd FileType c,cpp,objc map <buffer> = <Plug>(operator-clang-format)
 
 " Toggle auto formatting:
 " nmap <Leader>C :ClangFormatAutoToggle<CR>
