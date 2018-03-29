@@ -233,7 +233,7 @@ func! StartExecute(prog)
         endif
     endif
 
-    echo a:p
+    echom a:p
     execute "!./" . a:p
 endfunc
 nmap <silent> <F7> :call StartExecute(expand("%:t:r"))<CR>
