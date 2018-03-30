@@ -366,7 +366,7 @@ func SetTitle()
 "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
    else
        call setline(1,          "/*************************************************************************")
-       call append(line("."),   " > File Name: ".expand("%"))
+       call append(line("."),   " > File Name: ".expand("%:t"))
        call append(line(".")+1, " > Created Time: ".strftime("%c"))
        call append(line(".")+2, " ************************************************************************/")
        call append(line(".")+3, "")
