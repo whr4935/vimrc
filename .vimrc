@@ -210,15 +210,19 @@ nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 " f5 调试，f7运行
 func! StartDebug(prog)
     let a:p = a:prog
-    if !filereadable(a:p)
-        let a:p = "build/" . a:prog
+    if exists("$BUILD_TARGET") && filereadable($BUILD_TARGET)
+        let a:p = $BUILD_TARGET
+    else
         if !filereadable(a:p)
-            echo "no executable"
-            return
+            let a:p = "build/" . a:prog
+            if !filereadable(a:p)
+                echo "no executable"
+                return
+            endif
         endif
     endif
 
-    echom a:p
+    echom "cgdb " . a:p
     execute "!cgdb" a:p
     sleep 100m
 endfunc
@@ -226,11 +230,15 @@ nmap <silent> <F5> :call StartDebug(expand("%:t:r"))<CR><CR>
 
 func! StartExecute(prog)
     let a:p = a:prog
-    if !filereadable(a:p)
-        let a:p = "build/" . a:prog
+    if exists("$BUILD_TARGET") && filereadable($BUILD_TARGET)
+        let a:p = $BUILD_TARGET
+    else
         if !filereadable(a:p)
-            echo "no executable"
-            return
+            let a:p = "build/" . a:prog
+            if !filereadable(a:p)
+                echo "no executable"
+                return
+            endif
         endif
     endif
 
