@@ -835,8 +835,13 @@ set tags=./tags,tags;~                            "向上级目录递归查找ta
 
 func! Update_cscope()
     call system("make_cscope_db.sh -n")
-    silent cs reset
-    echo "update tags success!"
+    let ret = v:shell_error
+    if ret == 0
+        silent cs reset
+        echo "update tags success!"
+    else
+        echo "update tags failed!"
+    endif
 endfunc
 nmap <silent> <F4> :call Update_cscope()<CR>
 " Ctags {
