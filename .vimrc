@@ -612,7 +612,12 @@ noremap <c-l> <c-w>l
 " <Leader>cu 取消选中区域(行)的注释，选中区域(行)内至少有一个 /* */
 " <Leader>ca 在/*...*/与//这两种注释方式中切换（其它语言可能不一样了）
 " <Leader>cA 行尾注释
-let NERDSpaceDelims = 1                     "在左注释符之后，右注释符之前留有空格
+" let NERDSpaceDelims = 1                     "在左注释符之后，右注释符之前留有空格
+
+"Ctrl+/ 切换注释
+nmap <C-_> :call NERDComment(0, "toggle")<CR>
+vmap <C-_> :call NERDComment(0, "toggle")<CR>gv
+
 
 " -----------------------------------------------------------------------------
 "  < nerdtree 插件配置 >
