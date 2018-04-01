@@ -203,6 +203,8 @@ vnoremap <silent> * :<C-U>let @/="<C-R>=MakePattern(@*)<CR>"<CR>:set hls<CR>
 
 " 在word上加上引号
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+在word上加上括号
+nnoremap <leader>( viw<esc>a)<esc>hbi(<esc>
 
 " 让配置变更立即生效
 " autocmd BufWritePost $MYVIMRC source $MYVIMRC
