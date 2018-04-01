@@ -247,7 +247,7 @@ func! StartExecute(prog)
 endfunc
 nmap <silent> <F7> :call StartExecute(expand("%:t:r"))<CR>
 
-nmap <silent> mm :make<CR>
+nmap <silent> mm :w<CR>:make<CR>
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
