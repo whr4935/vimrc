@@ -246,6 +246,12 @@ nmap <silent> <F7> :call StartExecute(expand("%:t:r"))<CR>
 
 nmap <silent> mm :w<CR>:make<CR>
 
+" Hex read
+nmap <Leader>hr :%!xxd -g 1<CR> :set filetype=xxd<CR> :set readonly<CR>
+
+" Hex write
+nmap <Leader>hw :%!xxd -r<CR> :set binary<CR> :set filetype=<CR> :set noreadonly<CR>
+
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
 " -----------------------------------------------------------------------------
