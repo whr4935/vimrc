@@ -244,7 +244,8 @@ func! StartExecute(prog)
 endfunc
 nmap <silent> <F7> :call StartExecute(expand("%:t:r"))<CR>
 
-nmap <silent> mm :w<CR>:make<CR>
+autocmd FileType c,cpp,python set autowrite
+nmap <silent> mm :make<CR>
 
 " Hex read
 nmap <Leader>hr :%!xxd -g 1<CR> :set filetype=xxd<CR> :set readonly<CR>
