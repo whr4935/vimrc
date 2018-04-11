@@ -286,7 +286,14 @@ set foldlevel=9999                                    " 折叠的层次，打开
 set autoread
 
 " 常规模式下输入 cS 清除行尾空格
-nmap cS :%s/\s\+$//g<CR>:noh<CR>
+"nmap cS :%s/\s\+$//g<CR>:noh<CR>
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    noh
+    call winrestview(l:save)
+endfun
+au BufWritePre *.cpp,*.[ch],*.cc,*.hpp call TrimWhitespace()
 
 " 常规模式下输入 cM 清除行尾 ^M 符号
 nmap cM :%s/\r$//g<CR>:noh<CR>
