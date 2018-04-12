@@ -201,6 +201,7 @@ func! StartDebug(prog)
         return StartDebugCpp(a:prog)
     elseif &filetype == 'python'
         return StartDebugPython(a:prog)
+    endif
 endfunc
 
 " debug cpp
@@ -235,6 +236,7 @@ func! StartExecute(prog)
         return StartExecuteCpp(a:prog)
     elseif &filetype == 'python'
         return StartExecutePython(a:prog)
+    endif
 endfunc
 
 " execute cpp
@@ -996,7 +998,7 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " jedi python补全插件
 " -----------------------------------------------------------------------------
 let g:jedi#popup_select_first=0
-set completeopt=longest,menuone
+autocmd FileType python setlocal completeopt=longest,menuone
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#popup_on_dot = 0
 
