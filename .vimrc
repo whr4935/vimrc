@@ -40,6 +40,7 @@ Plugin 'tpope/vim-fugitive'
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
+Plugin 'mbbill/undotree'
 Plugin 'a.vim'
 " Plugin 'Align'
 Plugin 'jiangmiao/auto-pairs'
@@ -230,7 +231,7 @@ func! StartDebugPython(prog)
 endfunc
 
 " -----------------------------------------------------------------------------
-" execute 
+" execute
 func! StartExecute(prog)
     if &filetype == 'cpp' || &filetype == 'c'
         return StartExecuteCpp(a:prog)
@@ -465,6 +466,16 @@ cmap w!! w !sudo tee % >/dev/null
 "=============================================================================
 "                         << 以下为常用插件配置 >>
 "=============================================================================
+
+"-----------------------------------------------------------------------------
+" < undotree 插件配置 >
+"-----------------------------------------------------------------------------
+nnoremap <F3> :UndotreeToggle<CR>
+
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
 
 "-----------------------------------------------------------------------------
 " < a.vim 插件配置 >
