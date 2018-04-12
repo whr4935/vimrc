@@ -173,17 +173,6 @@ func SetMakeprgCpp()
             set makeprg=g++\ -g\ -std=c++11\ -Wall\ -Werror\ -pthread\ -o\ %:r\ %
         endif
         let g:firstSetMakeCpp=1
-        let g:firstSetMakePython=0
-    endif
-endfunc
-
-let g:firstSetMakePython=0
-autocmd FileType python exec ":call SetMakeprgPython()"
-func SetMakeprgPython()
-    if g:firstSetMakePython == 0
-        set makeprg=python\ %
-        let g:firstSetMakePython=1
-        let g:firstSetMakeCpp=0
     endif
 endfunc
 
@@ -204,8 +193,18 @@ vnoremap <silent> * :<C-U>let @/="<C-R>=MakePattern(@*)<CR>"<CR>:set hls<CR>
 " 让配置变更立即生效
 " autocmd BufWritePost $MYVIMRC source $MYVIMRC
 
+" -----------------------------------------------------------------------------
 " f5 调试，f7运行
+" -----------------------------------------------------------------------------
 func! StartDebug(prog)
+    if &filetype == 'cpp' || &filetype == 'c'
+        return StartDebugCpp(a:prog)
+    elseif &filetype == 'python'
+        return StartDebugPython(a:prog)
+endfunc
+
+" debug cpp
+func! StartDebugCpp(prog)
     let a:p = a:prog
     if exists("$BUILD_TARGET") && filereadable($BUILD_TARGET)
         let a:p = $BUILD_TARGET
@@ -223,9 +222,23 @@ func! StartDebug(prog)
     execute "!cgdb" a:p
     sleep 100m
 endfunc
-nmap <silent> <F5> :call StartDebug(expand("%:t:r"))<CR><CR>
 
+" debug python
+func! StartDebugPython(prog)
+    execute "!python -m pdb " . "%"
+endfunc
+
+" -----------------------------------------------------------------------------
+" execute 
 func! StartExecute(prog)
+    if &filetype == 'cpp' || &filetype == 'c'
+        return StartExecuteCpp(a:prog)
+    elseif &filetype == 'python'
+        return StartExecutePython(a:prog)
+endfunc
+
+" execute cpp
+func! StartExecuteCpp(prog)
     let a:p = a:prog
     if exists("$BUILD_TARGET") && filereadable($BUILD_TARGET)
         let a:p = $BUILD_TARGET
@@ -242,16 +255,25 @@ func! StartExecute(prog)
     echom a:p
     execute "!./" . a:p
 endfunc
+
+func! StartExecutePython(prog)
+    execute "!python " . "%"
+endfunc
+
+" ----------------------------------------------------------------------------
+nmap <silent> <F5> :call StartDebug(expand("%:t:r"))<CR><CR>
 nmap <silent> <F7> :call StartExecute(expand("%:t:r"))<CR>
 
 autocmd FileType c,cpp,python set autowrite
-nmap <silent> mm :make<CR>
+autocmd FileType c,cpp nnoremap <buffer> mm :make<CR>
 
+" -----------------------------------------------------------------------------
 " Hex read
 nmap <Leader>hr :%!xxd -g 1<CR> :set filetype=xxd<CR> :set readonly<CR>
 
 " Hex write
 nmap <Leader>hw :set binary<CR> :%!xxd -r<CR> :set filetype=<CR> :set noreadonly<CR>
+
 
 " -----------------------------------------------------------------------------
 "  < 编码配置 >
@@ -686,7 +708,7 @@ let g:airline#extensions#whitespace#enabled = 0
 "  < SrcExpl 插件配置 >
 " -----------------------------------------------------------------------------
 " 增强源代码浏览，其功能就像Windows中的"Source Insight"
-nmap <F3> :SrcExplToggle<CR>                "打开/闭浏览窗口
+"nmap <F3> :SrcExplToggle<CR>                "打开/闭浏览窗口
 
 " -----------------------------------------------------------------------------
 "  < std_c 插件配置 >
@@ -894,6 +916,9 @@ nmap <silent> <F4> :call Update_cscope()<CR>
 " let GtagsCscope_Quiet = 1
 
 
+" -----------------------------------------------------------------------------
+" < neocomplete 补全插件>
+" -----------------------------------------------------------------------------
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
