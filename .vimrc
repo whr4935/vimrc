@@ -49,7 +49,7 @@ Plugin 'bufexplorer.zip'
 Plugin 'cSyntaxAfter'
 Plugin 'ctrlpvim/ctrlp.vim'
 Bundle 'tacahiroy/ctrlp-funky'
-Plugin 'mattn/emmet-vim'
+"Plugin 'mattn/emmet-vim'
 " Plugin 'Yggdroot/indentLine' "cause stutter
 " Plugin 'vim-javacompleteex'
 " Plugin 'Mark--Karkat'
@@ -66,7 +66,8 @@ Plugin 'majutsushi/tagbar'
 Plugin 'taglist.vim'
 " Plugin 'TxtBrowser'
 Plugin 'ZoomWin'
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'rdnetto/YCM-Generator'
 " Plugin 'Raimondi/delimitMate'
 " Plugin 'aceofall/gtags.vim'
 Plugin 'Shougo/neocomplete.vim'
@@ -799,12 +800,6 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " 常规模式下按快捷键 <c-w>o 在最大化与还原间切换
 
 " -----------------------------------------------------------------------------
-"  < YouCompleteMe 插件配置 >
-" -----------------------------------------------------------------------------
-" 用于C C++ objectC的自动补全和文件路径自动补全等
-"let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
-
-" -----------------------------------------------------------------------------
 "  < EasyGrep 插件配置 >
 " -----------------------------------------------------------------------------
 " set default mode
@@ -903,7 +898,9 @@ func! Update_cscope()
         echo "update tags failed!"
     endif
 endfunc
-nmap <silent> <F4> :call Update_cscope()<CR>
+
+"nmap <silent> <F4> :call Update_cscope()<CR>
+
 " Ctags {
 " set tags=./tags;/,~/.vimtags
 
@@ -941,78 +938,185 @@ nmap <silent> <F4> :call Update_cscope()<CR>
 " -----------------------------------------------------------------------------
 " < neocomplete 补全插件>
 " -----------------------------------------------------------------------------
-"Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-    \ 'default' : '',
-    \ 'vimshell' : $HOME.'/.vimshell_hist',
-    \ 'scheme' : $HOME.'/.gosh_completions'
-        \ }
-
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
+let g:enable_neocomplete = 0
+if version < 704
+    let g:enable_neocomplete = 1
 endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-" Plugin key-mappings.
-inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+if g:enable_neocomplete == 1
+    "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+    " Disable AutoComplPop.
+    let g:acp_enableAtStartup = 0
+    " Use neocomplete.
+    let g:neocomplete#enable_at_startup = 1
+    " Use smartcase.
+    let g:neocomplete#enable_smart_case = 1
+    " Set minimum syntax keyword length.
+    let g:neocomplete#sources#syntax#min_keyword_length = 3
 
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-  " For no inserting <CR> key.
-  return pumvisible() ? "\<C-y>" : "\<CR>"
-endfunction
-" <TAB>: completion.
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" Close popup by <Space>.
-"inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+    " Define dictionary.
+    let g:neocomplete#sources#dictionary#dictionaries = {
+                \ 'default' : '',
+                \ 'vimshell' : $HOME.'/.vimshell_hist',
+                \ 'scheme' : $HOME.'/.gosh_completions'
+                \ }
 
-" AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
+    " Define keyword.
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-" Shell like behavior(not recommended).
-"set completeopt+=longest
-"let g:neocomplete#enable_auto_select = 1
-"let g:neocomplete#disable_auto_complete = 1
-"inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+    " Plugin key-mappings.
+    inoremap <expr><C-g>     neocomplete#undo_completion()
+    inoremap <expr><C-l>     neocomplete#complete_common_string()
 
-" Enable omni completion.
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=jedi#completions
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+        " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+        " For no inserting <CR> key.
+        return pumvisible() ? "\<C-y>" : "\<CR>"
+    endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    " Close popup by <Space>.
+    "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
+    " AutoComplPop like behavior.
+    "let g:neocomplete#enable_auto_select = 1
+
+    " Shell like behavior(not recommended).
+    "set completeopt+=longest
+    "let g:neocomplete#enable_auto_select = 1
+    "let g:neocomplete#disable_auto_complete = 1
+    "inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Enable heavy omni completion.
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+        let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    " let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    " let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+    " For perlomni.vim setting.
+    " https://github.com/c9s/perlomni.vim
+    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 endif
-"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-" let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-" let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
 
-" For perlomni.vim setting.
-" https://github.com/c9s/perlomni.vim
-let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+" -----------------------------------------------------------------------------
+"  < YouCompleteMe 插件配置 >
+" -----------------------------------------------------------------------------
+let g:enable_youCompleteMe = 1
+if version < 704
+    let g:enable_youCompleteMe = 0
+endif
+
+if g:enable_youCompleteMe == 1
+    let g:acp_enableAtStartup = 0
 
 
+    " remap Ultisnips for compatibility for YCM
+    "let g:UltiSnipsExpandTrigger = '<C-j>'
+    "let g:UltiSnipsJumpForwardTrigger = '<C-j>'
+    "let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
+
+    " Enable omni completion.
+    "autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    "autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    "autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    "autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+    "autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+        " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+        " For no inserting <CR> key.
+        return pumvisible() ? "\<C-y>" : "\<CR>"
+    endfunction
+
+    "autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
+    "inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项"
+
+    " Disable the neosnippet preview candidate window
+    " When enabled, there can be too much visual noise
+    " especially when splits are used.
+    set completeopt-=preview
+
+    "let g:ycm_add_preview_to_completeopt = 1
+    "let g:ycm_autoclose_preview_window_after_completion = 1
+    "let g:ycm_autoclose_preview_window_after_insertion = 1
+
+    " enable completion from tags
+    "let g:ycm_collect_identifiers_from_tags_files = 1
+ 
+    let g:ycm_max_identifier_candidates = 10   "符号补全最大个数
+    let g:ycm_max_num_candidates = 10          "语义补全最大个数
+
+    " 静态代码检查
+    let g:ycm_show_diagnostics_ui = 1
+    let g:ycm_enable_diagnostic_highlighting = 0
+
+    let g:ycm_cache_omnifunc=0
+
+    let g:ycm_seed_identifiers_with_syntax=1
+
+    let g:ycm_collect_identifiers_from_comments_and_strings = 1
+
+    " 在注释输入中也能补全
+    let g:ycm_complete_in_comments = 1
+
+    " 在字符串输入中也能补全
+    let g:ycm_complete_in_strings = 1
+    let g:ycm_autoclose_preview_window_after_completion = 1
+    let g:ycm_autoclose_preview_window_after_insertion = 1
+
+    " 加载.ycm_extra_conf.py文件时不提示警告
+    let g:ycm_confirm_extra_conf = 0
+
+    let g:ycm_filetype_blacklist = { 'tagbar': 1,
+                                    \ 'nerdtree': 1,
+                                    \ 'log': 1,
+                                    \ 'txt': 1,
+                                    \ }
+
+    let g:ycm_python_binary_path = 'python'
+
+    "  fix .cpp error: ValueError: Still no compile flags, no completions yet.
+    let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+
+    " Vim's autocomplete is excruciatingly slow
+    " http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
+    "set complete-=i
+
+    let g:ycm_key_invoke_completion = '<C-,>'
+
+    let g:ycm_semantic_triggers =  {
+                \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+                \ 'cs,lua,javascript': ['re!\w{2}'],
+                \ }
+
+    map <silent> <C-]>  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+    nmap <silent> <F4> :YcmGenerateConfig<CR>
+    nmap <silent> <F8> :YcmForceCompileAndDiagnostics<CR>
+endif
 
 " -----------------------------------------------------------------------------
 " jedi python补全插件
@@ -1047,7 +1151,4 @@ let g:instant_markdown_allow_unsafe_content = 1
 " 指在常规模式下按"\"键加"t"键，这里不是同时按，而是先按"\"键后按"t"键，间隔在一
 " 秒内，而<Leader>cs是先按"\"键再按"c"又再按"s"键；如要修改"<leader>"键，可以把
 " 下面的设置取消注释，并修改双引号中的键为你想要的，如修改为逗号键。
-"
-" nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
 
