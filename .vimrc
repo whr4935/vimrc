@@ -899,8 +899,6 @@ func! Update_cscope()
     endif
 endfunc
 
-"nmap <silent> <F4> :call Update_cscope()<CR>
-
 " Ctags {
 " set tags=./tags;/,~/.vimtags
 
@@ -1027,7 +1025,6 @@ endif
 if g:enable_youCompleteMe == 1
     let g:acp_enableAtStartup = 0
 
-
     " remap Ultisnips for compatibility for YCM
     "let g:UltiSnipsExpandTrigger = '<C-j>'
     "let g:UltiSnipsJumpForwardTrigger = '<C-j>'
@@ -1059,10 +1056,6 @@ if g:enable_youCompleteMe == 1
     " especially when splits are used.
     set completeopt-=preview
 
-    "let g:ycm_add_preview_to_completeopt = 1
-    "let g:ycm_autoclose_preview_window_after_completion = 1
-    "let g:ycm_autoclose_preview_window_after_insertion = 1
-
     " enable completion from tags
     "let g:ycm_collect_identifiers_from_tags_files = 1
  
@@ -1076,6 +1069,8 @@ if g:enable_youCompleteMe == 1
 
     let g:ycm_cache_omnifunc=0
 
+    let g:ycm_use_ultisnips_completer = 0
+
     let g:ycm_seed_identifiers_with_syntax=1
 
     let g:ycm_collect_identifiers_from_comments_and_strings = 1
@@ -1085,6 +1080,8 @@ if g:enable_youCompleteMe == 1
 
     " 在字符串输入中也能补全
     let g:ycm_complete_in_strings = 1
+
+    "let g:ycm_add_preview_to_completeopt = 1
     let g:ycm_autoclose_preview_window_after_completion = 1
     let g:ycm_autoclose_preview_window_after_insertion = 1
 
@@ -1106,7 +1103,7 @@ if g:enable_youCompleteMe == 1
     " http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
     "set complete-=i
 
-    let g:ycm_key_invoke_completion = '<C-,>'
+    "let g:ycm_key_invoke_completion = '<C-,>'
 
     let g:ycm_semantic_triggers =  {
                 \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
@@ -1114,10 +1111,32 @@ if g:enable_youCompleteMe == 1
                 \ }
 
     map <silent> <C-]>  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-    nmap <silent> <F4> :YcmGenerateConfig<CR>
-    nmap <silent> <F8> :YcmForceCompileAndDiagnostics<CR>
 endif
+
+func! GenYcmConfig()
+    if g:enable_youCompleteMe == 1 && exists(":YcmGenerateConfig") && !filereadable(".ycm_extra_conf.py")
+        YcmGenerateConfig
+    endif
+
+    "if (filereadable("makefile") || filereadable("Makefile")) && executable("bear")>0
+        "!bear "make"
+    "endif
+endfunc
+
+func! RestartYcmServer()
+    if g:enable_youCompleteMe == 1 && exists(":YcmRestartServer")
+        YcmRestartServer
+    endif
+endfunc
+
+" update tags
+func! UpdateTags()
+    call GenYcmConfig()
+    call RestartYcmServer()
+    call Update_cscope()
+endfunc
+
+nmap <silent> <F4> :call UpdateTags()<CR>
 
 " -----------------------------------------------------------------------------
 " jedi python补全插件
@@ -1143,13 +1162,4 @@ let g:instant_markdown_allow_unsafe_content = 1
 
 " 自动切换目录为当前编辑文件所在目录
 " au BufRead,BufNewFile,BufEnter * cd %:p:h
-
-
-" =============================================================================
-"                          << 其它 >>
-" =============================================================================
-" 注：上面配置中的"<Leader>"在本软件中设置为"\"键（引号里的反斜杠），如<Leader>t
-" 指在常规模式下按"\"键加"t"键，这里不是同时按，而是先按"\"键后按"t"键，间隔在一
-" 秒内，而<Leader>cs是先按"\"键再按"c"又再按"s"键；如要修改"<leader>"键，可以把
-" 下面的设置取消注释，并修改双引号中的键为你想要的，如修改为逗号键。
 

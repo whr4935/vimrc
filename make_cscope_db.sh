@@ -61,8 +61,9 @@ fi
 
 
 cscope $cscope_arg  -i cscope.files $args
-# ctags --c++-kinds=+px --fields=+iaS --extra=+q -L cscope.files
-ctags -R --c++-kinds=+px --fields=+iaS --extra=+q $PWD $@
+# ctags --c++-kinds=+px --fields=+liaS --extra=+q -L cscope.files
+
+#ctags -R --c++-kinds=+px --fields=+liaS --extra=+q $PWD $@
 
 
 
