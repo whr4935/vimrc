@@ -401,35 +401,44 @@ func SetTitle()
 "    elseif &filetype == 'mkd'
 "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
    else
-       call setline(1,          "/*************************************************************************")
-       call append(line("."),   " > File Name: ".expand("%:t"))
-       call append(line(".")+1, " > Created Time: ".strftime("%c"))
-       call append(line(".")+2, " ************************************************************************/")
-       call append(line(".")+3, "")
+       call setline(1,          "/*")
+       call append(line("."),   " * Copyright (C) Harry Wang")
+       call append(line(".")+1, " *")
+       call append(line(".")+2, " * Create Time: ".strftime("%Y.%m"))
+       call append(line(".")+3, " */")
+       call append(line(".")+4, "")
    endif
    if expand("%:e") == 'cpp'
-       call append(line(".")+4, "#include <iostream>")
-       call append(line(".")+5, "")
+       call append(line(".")+5, "#include <iostream>")
        call append(line(".")+6, "")
-       call append(line(".")+7, "int main(int argc, char** argv)")
-       call append(line(".")+8, "{")
-       call append(line(".")+9, "    ")
-       call append(line(".")+10, "    return 0;")
-       call append(line(".")+11, "}")
-       call append(line(".")+12, "")
+       call append(line(".")+7, "")
+       call append(line(".")+8, "int main(int argc, char** argv)")
+       call append(line(".")+9, "{")
+       call append(line(".")+10, "    ")
+       call append(line(".")+11, "    return 0;")
+       call append(line(".")+12, "}")
+       call append(line(".")+13, "")
    endif
    if &filetype == 'c'
-       " call append(line(".")+6, "#include<stdio.h>")
-       " call append(line(".")+7, "")
+       call append(line(".")+5, "#include<stdio.h>")
+       call append(line(".")+6, "")
+       call append(line(".")+7, "")
+       call append(line(".")+8, "int main(int argc, char** argv)")
+       call append(line(".")+9, "{")
+       call append(line(".")+10, "    ")
+       call append(line(".")+11, "    return 0;")
+       call append(line(".")+12, "}")
+       call append(line(".")+13, "")
    endif
    if expand("%:e") == 'h'
-       call append(line(".")+4, "#ifndef _".toupper(expand("%:t:r"))."_H")
-       call append(line(".")+5, "#define _".toupper(expand("%:t:r"))."_H")
-       call append(line(".")+6, "#endif")
+       call append(line(".")+5, "#ifndef _".toupper(expand("%:t:r"))."_H")
+       call append(line(".")+6, "#define _".toupper(expand("%:t:r"))."_H")
+       call append(line(".")+7, "")
+       call append(line(".")+8, "#endif")
    endif
    if &filetype == 'java'
-       call append(line(".")+4,"public class ".expand("%:r"))
-       call append(line(".")+5,"")
+       call append(line(".")+5,"public class ".expand("%:r"))
+       call append(line(".")+6,"")
    endif
    "新建文件后，自动定位到文件末尾
 endfunc
