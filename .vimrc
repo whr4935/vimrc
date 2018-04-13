@@ -1066,8 +1066,9 @@ if g:enable_youCompleteMe == 1
     " enable completion from tags
     "let g:ycm_collect_identifiers_from_tags_files = 1
  
-    let g:ycm_max_identifier_candidates = 10   "符号补全最大个数
-    let g:ycm_max_num_candidates = 10          "语义补全最大个数
+    "let g:ycm_max_identifier_candidates = 10   "符号补全最大个数
+    "let g:ycm_max_num_candidates = 10          "语义补全最大个数
+    set pumheight=15
 
     " 静态代码检查
     let g:ycm_show_diagnostics_ui = 1
