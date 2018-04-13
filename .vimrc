@@ -1133,7 +1133,7 @@ endfunc
 
 func! RestartYcmServer()
     if g:enable_youCompleteMe == 1 && exists(":YcmRestartServer")
-        YcmRestartServer
+        silent YcmRestartServer
     endif
 endfunc
 
@@ -1141,7 +1141,9 @@ endfunc
 func! UpdateTags()
     call GenYcmConfig()
     call RestartYcmServer()
-    call Update_cscope()
+    if &filetype == 'c' || &filetype == 'cpp'
+        call Update_cscope()
+    endif
 endfunc
 
 nmap <silent> <F4> :call UpdateTags()<CR>
