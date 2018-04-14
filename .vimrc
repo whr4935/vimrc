@@ -1068,6 +1068,7 @@ if g:enable_youCompleteMe == 1
 
     " 静态代码检查
     let g:ycm_show_diagnostics_ui = 1
+    let g:ycm_enable_diagnostic_signs = 0
     let g:ycm_enable_diagnostic_highlighting = 0
 
     let g:ycm_cache_omnifunc=0
