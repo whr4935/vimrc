@@ -66,8 +66,15 @@ Plugin 'majutsushi/tagbar'
 Plugin 'taglist.vim'
 " Plugin 'TxtBrowser'
 Plugin 'ZoomWin'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'rdnetto/YCM-Generator'
+if v:version > 704 || (v:version == 704 && has( 'patch1578' ))
+    Plugin 'Valloric/YouCompleteMe'
+    Plugin 'rdnetto/YCM-Generator'
+    let g:enable_youCompleteMe = 1
+    let g:enable_neocomplete = 0
+else
+    let g:enable_youCompleteMe = 0
+    let g:enable_neocomplete = 1
+endif
 " Plugin 'Raimondi/delimitMate'
 " Plugin 'aceofall/gtags.vim'
 Plugin 'Shougo/neocomplete.vim'
@@ -345,7 +352,7 @@ imap <c-l> <Right>
 imap <c-f> <ESC>0i
 
 " Ctrl + e 光标跳转到行尾
-imap <c-e> <ESC>$i
+"imap <c-e> <ESC>$i
 
 " 全选
 nmap <c-a> ggVG$
@@ -944,11 +951,6 @@ endfunc
 " -----------------------------------------------------------------------------
 " < neocomplete 补全插件>
 " -----------------------------------------------------------------------------
-let g:enable_neocomplete = 0
-if version < 704
-    let g:enable_neocomplete = 1
-endif
-
 if g:enable_neocomplete == 1
     "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
     " Disable AutoComplPop.
@@ -1025,11 +1027,6 @@ endif
 " -----------------------------------------------------------------------------
 "  < YouCompleteMe 插件配置 >
 " -----------------------------------------------------------------------------
-let g:enable_youCompleteMe = 1
-if version < 704
-    let g:enable_youCompleteMe = 0
-endif
-
 if g:enable_youCompleteMe == 1
     let g:acp_enableAtStartup = 0
 
@@ -1049,15 +1046,13 @@ if g:enable_youCompleteMe == 1
 
     " Recommended key-mappings.
     " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
     function! s:my_cr_function()
         " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
         " For no inserting <CR> key.
         return pumvisible() ? "\<C-y>" : "\<CR>"
     endfunction
-
-    "autocmd InsertLeave * if pumvisible() == 0|pclose|endif "离开插入模式后自动关闭预览窗口
-    "inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"    "回车即选中当前项"
+    "inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    "inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
     " Disable the neosnippet preview candidate window
     " When enabled, there can be too much visual noise
