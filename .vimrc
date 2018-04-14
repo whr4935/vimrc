@@ -1119,7 +1119,7 @@ if g:enable_youCompleteMe == 1
     let g:ycm_python_binary_path = 'python'
 
     "  fix .cpp error: ValueError: Still no compile flags, no completions yet.
-    let g:ycm_global_ycm_extra_conf = '~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
+    let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
     " Vim's autocomplete is excruciatingly slow
     " http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
