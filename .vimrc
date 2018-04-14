@@ -1113,14 +1113,19 @@ if g:enable_youCompleteMe == 1
     " http://stackoverflow.com/questions/2169645/vims-autocomplete-is-excruciatingly-slow
     "set complete-=i
 
-    "let g:ycm_key_invoke_completion = '<C-,>'
-
     let g:ycm_semantic_triggers =  {
                 \ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
                 \ 'cs,lua,javascript': ['re!\w{2}'],
                 \ }
 
+    "let g:ycm_key_invoke_completion = '<C-,>'
+    let g:ycm_key_detailed_diagnostics = '<leader>dd'
     map <silent> <C-]>  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+
+    autocmd FileType c,cpp,python nnoremap <buffer> <leader>dc :YcmCompleter GetDoc<CR>
+    autocmd FileType c,cpp nnoremap <buffer> <leader>df :YcmCompleter FixIt<CR>
+    autocmd FileType c,cpp nnoremap <buffer> <leader>dp :YcmCompleter GetParent<CR>
+    autocmd FileType c,cpp nnoremap <buffer> <leader>dt :YcmCompleter GetType<CR>
 endif
 
 func! GenYcmConfig()
