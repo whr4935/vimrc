@@ -315,6 +315,7 @@ set foldlevel=9999                                    " 折叠的层次，打开
 
 " 常规模式下用空格键来开关光标行所在折叠（注：zR 展开所有折叠，zM 关闭所有折叠）
 " nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+nnoremap <silent> <space> za
 
 " 当文件在外部被修改，自动更新该文件
 set autoread
@@ -416,41 +417,46 @@ func SetTitle()
        call append(line(".")+3, " */")
        call append(line(".")+4, "")
    endif
+
    if expand("%:e") == 'cpp'
        call append(line(".")+5, "#include <iostream>")
        call append(line(".")+6, "")
-       call append(line(".")+7, "")
-       call append(line(".")+8, "int main(int argc, char** argv)")
-       call append(line(".")+9, "{")
-       call append(line(".")+10, "    ")
-       call append(line(".")+11, "    return 0;")
-       call append(line(".")+12, "}")
-       call append(line(".")+13, "")
+       "call append(line(".")+7, "")
+       "call append(line(".")+8, "int main(int argc, char** argv)")
+       "call append(line(".")+9, "{")
+       "call append(line(".")+10, "    ")
+       "call append(line(".")+11, "    return 0;")
+       "call append(line(".")+12, "}")
+       "call append(line(".")+13, "")
    endif
-   if &filetype == 'c'
+
+   if expand("%:e") == 'c'
        call append(line(".")+5, "#include<stdio.h>")
        call append(line(".")+6, "")
-       call append(line(".")+7, "")
-       call append(line(".")+8, "int main(int argc, char** argv)")
-       call append(line(".")+9, "{")
-       call append(line(".")+10, "    ")
-       call append(line(".")+11, "    return 0;")
-       call append(line(".")+12, "}")
-       call append(line(".")+13, "")
+       "call append(line(".")+7, "")
+       "call append(line(".")+8, "int main(int argc, char** argv)")
+       "call append(line(".")+9, "{")
+       "call append(line(".")+10, "    ")
+       "call append(line(".")+11, "    return 0;")
+       "call append(line(".")+12, "}")
+       "call append(line(".")+13, "")
    endif
+
    if expand("%:e") == 'h'
        call append(line(".")+5, "#ifndef _".toupper(expand("%:t:r"))."_H")
        call append(line(".")+6, "#define _".toupper(expand("%:t:r"))."_H")
        call append(line(".")+7, "")
        call append(line(".")+8, "#endif")
    endif
+
    if &filetype == 'java'
        call append(line(".")+5,"public class ".expand("%:r"))
        call append(line(".")+6,"")
    endif
-   "新建文件后，自动定位到文件末尾
 endfunc
-autocmd BufNewFile *.cpp :normal! 11G
+
+"新建文件后，自动定位到文件末尾
+autocmd BufNewFile * normal G
 
 
 " -----------------------------------------------------------------------------
@@ -687,7 +693,7 @@ noremap <c-l> <c-w>l
 
 "Ctrl+/ 切换注释
 nmap <C-_> :call NERDComment(0, "toggle")<CR>
-vmap <C-_> :call NERDComment(0, "toggle")<CR>gv
+vmap <C-_> :call NERDComment(0, "toggle")<CR>
 
 
 " -----------------------------------------------------------------------------
