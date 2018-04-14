@@ -1098,6 +1098,18 @@ if g:enable_youCompleteMe == 1
     " 加载.ycm_extra_conf.py文件时不提示警告
     let g:ycm_confirm_extra_conf = 0
 
+    let g:ycm_always_populate_location_list = 1
+
+    function! s:CustomizeYcmLocationWindow()
+        " Move the window to the bottom of the screen.
+        wincmd J
+        " Set the window height.
+        10wincmd _
+        " Switch back to working window.
+        wincmd p
+    endfunction
+    autocmd User YcmLocationOpened call s:CustomizeYcmLocationWindow()
+
     let g:ycm_filetype_blacklist = { 'tagbar': 1,
                                     \ 'nerdtree': 1,
                                     \ 'log': 1,
