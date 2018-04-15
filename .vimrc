@@ -28,6 +28,7 @@ Plugin 'tpope/vim-fugitive'
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 
 Plugin 'mbbill/undotree'
+Plugin 'terryma/vim-multiple-cursors'
 Plugin 'a.vim'
 " Plugin 'Align'
 Plugin 'jiangmiao/auto-pairs'
