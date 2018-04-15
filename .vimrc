@@ -1028,10 +1028,8 @@ if g:enable_youCompleteMe == 1
                 \ 'cs,lua,javascript': ['re!\w{2}'],
                 \ }
 
-    "let g:ycm_key_invoke_completion = '<C-,>'
     let g:ycm_key_detailed_diagnostics = '<leader>dd'
-    map <silent> <C-]>  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
+    autocmd FileType c,cpp,python nnoremap <silent> <C-]>      :YcmCompleter GoToDefinitionElseDeclaration<CR>
     autocmd FileType c,cpp,python nnoremap <silent> <leader>dc :YcmCompleter GetDoc<CR>
     autocmd FileType c,cpp        nnoremap <silent> <leader>df :YcmCompleter FixIt<CR>
     autocmd FileType c,cpp        nnoremap <silent> <leader>dp :YcmCompleter GetParent<CR>
