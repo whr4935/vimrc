@@ -57,7 +57,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
 " Plugin 'Lokaltog/vim-powerline'
 Plugin 'repeat.vim'
-Plugin 'msanders/snipmate.vim'
+"Plugin 'msanders/snipmate.vim'
 Plugin 'wesleyche/SrcExpl'
 Plugin 'std_c.zip'
 Plugin 'tpope/vim-surround'
@@ -80,7 +80,10 @@ endif
 Plugin 'Shougo/neocomplete.vim'
 " Plugin 'Shougo/neosnippet.vim'
 " Plugin 'Shougo/neosnippet-snippets'
-" Plugin 'honza/vim-snippets'
+" Track the engine.
+Plugin 'SirVer/ultisnips'
+" Snippets are separated from the engine. Add this if you want them:
+Plugin 'honza/vim-snippets'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tomasr/molokai'
@@ -338,27 +341,22 @@ set smartcase                                         "如果搜索模式包含�
 " set noincsearch                                       "在输入要搜索的文字时，取消实时匹配
 
 " Ctrl + K 插入模式下光标向上移动
-imap <c-k> <Up>
+inoremap <c-k> <Up>
 
 " Ctrl + J 插入模式下光标向下移动
-imap <c-j> <Down>
+inoremap <c-j> <Down>
 
 " Ctrl + H 插入模式下光标向左移动
-imap <c-h> <Left>
+inoremap <c-h> <Left>
 
 " Ctrl + L 插入模式下光标向右移动
-imap <c-l> <Right>
+inoremap <c-l> <Right>
 
-" Ctrl + f 光标跳转到行头
-imap <c-f> <ESC>0i
+" Ctrl + a 光标跳转到行头
+inoremap <c-a> <ESC>I
 
 " Ctrl + e 光标跳转到行尾
-"imap <c-e> <ESC>$i
-
-" 全选
-nmap <c-a> ggVG$
-imap <c-a> <ESC>ggVG$
-
+inoremap <c-e> <ESC>A
 
 " 启用每行超过80列的字符提示（字体变蓝并加下划线），不启用就注释掉
 "au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
@@ -526,6 +524,7 @@ endif
 "-----------------------------------------------------------------------------
 "用于括号与引号自动补全，不过会与函数原型提示插件echofunc冲突
 "所以我就没有加入echofunc插件
+let g:AutoPairsMapCh = 0
 
 "-----------------------------------------------------------------------------
 " < BufExplorer 插件配置 >
@@ -1034,13 +1033,6 @@ endif
 "  < YouCompleteMe 插件配置 >
 " -----------------------------------------------------------------------------
 if g:enable_youCompleteMe == 1
-    let g:acp_enableAtStartup = 0
-
-    " remap Ultisnips for compatibility for YCM
-    "let g:UltiSnipsExpandTrigger = '<C-j>'
-    "let g:UltiSnipsJumpForwardTrigger = '<C-j>'
-    "let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-
     " Enable omni completion.
     "autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     "autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -1050,6 +1042,10 @@ if g:enable_youCompleteMe == 1
     "autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
     "autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 
+    "youcompleteme  默认tab  s-tab 和 ultisnips 冲突
+    let g:ycm_key_list_select_completion = ['<Down>']
+    let g:ycm_key_list_previous_completion = ['<Up>']
+
     " Recommended key-mappings.
     " <CR>: close popup and save indent.
     function! s:my_cr_function()
@@ -1058,6 +1054,7 @@ if g:enable_youCompleteMe == 1
         return pumvisible() ? "\<C-y>" : "\<CR>"
     endfunction
     "inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+
     "inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
     " Disable the neosnippet preview candidate window
@@ -1079,7 +1076,7 @@ if g:enable_youCompleteMe == 1
 
     let g:ycm_cache_omnifunc=0
 
-    let g:ycm_use_ultisnips_completer = 0
+    let g:ycm_use_ultisnips_completer = 1
 
     let g:ycm_seed_identifiers_with_syntax=1
 
@@ -1131,6 +1128,7 @@ if g:enable_youCompleteMe == 1
                 \ }
 
     "let g:ycm_key_invoke_completion = '<C-,>'
+    let g:ycm_key_list_stop_completion = ['<C-y>','<CR>']
     let g:ycm_key_detailed_diagnostics = '<leader>dd'
     map <silent> <C-]>  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
@@ -1166,6 +1164,19 @@ func! UpdateTags()
 endfunc
 
 nmap <silent> <F4> :call UpdateTags()<CR>
+
+" -----------------------------------------------------------------------------
+"  < UltiSnips  插件配置 >
+" -----------------------------------------------------------------------------
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<C-j>"
+    let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+    let g:UltiSnipsListSnippets="<c-f>"
+    " If you want :UltiSnipsEdit to split your window.
+    let g:UltiSnipsEditSplit="vertical"
+
+    let g:UltiSnipsSnippetsDir='~/.vimrc_whr/mySnippets/UltiSnips'
+    set rtp+=~/.vimrc_whr/mySnippets
 
 " -----------------------------------------------------------------------------
 " jedi python补全插件
