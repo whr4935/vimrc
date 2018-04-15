@@ -1,16 +1,3 @@
-" set nocompatible
-" filetype on
-" set number
-" set autoindent
-" set smartindent
-" set showmatch
-" set ruler
-" set incsearch
-" " set cindent
-" set nobackup
-" set clipboard+=unnamed
-" syntax on
-
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -58,7 +45,7 @@ Plugin 'scrooloose/nerdtree'
 " Plugin 'Lokaltog/vim-powerline'
 Plugin 'repeat.vim'
 "Plugin 'msanders/snipmate.vim'
-Plugin 'wesleyche/SrcExpl'
+"Plugin 'wesleyche/SrcExpl'
 Plugin 'std_c.zip'
 Plugin 'tpope/vim-surround'
 " Plugin 'scrooloose/syntastic'
@@ -116,11 +103,6 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-
-" =============================================================================
-"        << 判断操作系统是 Windows 还是 Linux 和判断是终端还是 Gvim >>
-" =============================================================================
-
 " -----------------------------------------------------------------------------
 "  < 判断操作系统是否是 Windows 还是 Linux >
 " -----------------------------------------------------------------------------
@@ -132,7 +114,6 @@ else
     let g:islinux = 1
 endif
 
-
 if g:islinux
     set hlsearch        "高亮搜索
     set incsearch       "在输入要搜索的文字时，实时匹配
@@ -143,10 +124,6 @@ if g:islinux
         au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
     endif
 
-    "	" This line should not be removed as it ensures that various options are
-    "	" properly set to work with the Vim-related packages available in Debian.
-    "	runtime! debian.vim
-    "
     "	" Vim5 and later versions support syntax highlighting. Uncommenting the next
     "	" line enables syntax highlighting by default.
     if has("syntax")
@@ -323,8 +300,7 @@ nnoremap <silent> <space> za
 " 当文件在外部被修改，自动更新该文件
 set autoread
 
-" 常规模式下输入 cS 清除行尾空格
-"nmap cS :%s/\s\+$//g<CR>:noh<CR>
+"保存c/c++文件时清除行尾空格
 fun! TrimWhitespace()
     let l:save = winsaveview()
     %s/\s\+$//e
@@ -405,8 +381,6 @@ func SetTitle()
        call setline(1,"#!/usr/bin/env ruby")
        call append(line("."),"# encoding: utf-8")
        call append(line(".")+1, "")
-"    elseif &filetype == 'mkd'
-"        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
    else
        call setline(1,          "/*")
        call append(line("."),   " * Copyright (C) Harry Wang")
@@ -419,25 +393,11 @@ func SetTitle()
    if expand("%:e") == 'cpp'
        call append(line(".")+5, "#include <iostream>")
        call append(line(".")+6, "")
-       "call append(line(".")+7, "")
-       "call append(line(".")+8, "int main(int argc, char** argv)")
-       "call append(line(".")+9, "{")
-       "call append(line(".")+10, "    ")
-       "call append(line(".")+11, "    return 0;")
-       "call append(line(".")+12, "}")
-       "call append(line(".")+13, "")
    endif
 
    if expand("%:e") == 'c'
        call append(line(".")+5, "#include<stdio.h>")
        call append(line(".")+6, "")
-       "call append(line(".")+7, "")
-       "call append(line(".")+8, "int main(int argc, char** argv)")
-       "call append(line(".")+9, "{")
-       "call append(line(".")+10, "    ")
-       "call append(line(".")+11, "    return 0;")
-       "call append(line(".")+12, "}")
-       "call append(line(".")+13, "")
    endif
 
    if expand("%:e") == 'h'
@@ -535,12 +495,6 @@ let g:AutoPairsMapCh = 0
 " <Leader>bs 水平分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
 " <Leader>bv 垂直分割窗口显示缓存列表，并在缓存列表窗口中打开选定文件
 
-"-----------------------------------------------------------------------------
-" < BufExplorer 插件配置 >
-"-----------------------------------------------------------------------------
-" 显示/隐藏 MiniBufExplorer 窗口
-" map <Leader>bl :MBEToggle<cr>
-
 " -----------------------------------------------------------------------------
 "  < ccvext.vim 插件配置 >
 " -----------------------------------------------------------------------------
@@ -622,7 +576,7 @@ endif
 " 用于显示对齐线，与 indent_guides 在显示方式上不同，根据自己喜好选择了
 " 在终端上会有屏幕刷新的问题，这个问题能解决有更好了
 " 开启/关闭对齐线
-nmap <leader>il :IndentLinesToggle<CR>
+"nmap <leader>il :IndentLinesToggle<CR>
 
 
 " 设置终端对齐线颜色，如果不喜欢可以将其注释掉采用默认颜色
@@ -660,25 +614,6 @@ noremap <c-h> <c-w>h
 noremap <c-l> <c-w>l
 
 " -----------------------------------------------------------------------------
-"  < quickfix 插件配置 >
-" -----------------------------------------------------------------------------
-" nnoremap <leader>q :call QuickfixToggle()<CR>
-
-" let g:quickfix_is_open = 0
-
-" function! QuickfixToggle()
-    " if g:quickfix_is_open
-        " cclose
-        " let g:quickfix_is_open = 0
-        " execute g:quickfix_return_to_window . "wincmd w"
-    " else
-        " let g:quickfix_return_to_window = winnr()
-        " copen
-        " let g:quickfix_is_open = 1
-    " endif
-" endfunction
-
-" -----------------------------------------------------------------------------
 "  < nerdcommenter 插件配置 >
 " -----------------------------------------------------------------------------
 " 我主要用于C/C++代码注释(其它的也行)
@@ -694,7 +629,6 @@ noremap <c-l> <c-w>l
 "Ctrl+/ 切换注释
 nmap <silent> <C-_> :call NERDComment(0, "toggle")<CR>
 vmap <silent> <C-_> :call NERDComment(0, "toggle")<CR>
-
 
 " -----------------------------------------------------------------------------
 "  < nerdtree 插件配置 >
@@ -722,11 +656,6 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
     let g:nerdtree_tabs_open_on_gui_startup=0
 endif
 " }
-
-" -----------------------------------------------------------------------------
-"  < powerline 插件配置 >
-" -----------------------------------------------------------------------------
-" 状态栏插件，更好的状态栏效果
 
 " -----------------------------------------------------------------------------
 "  <airline 插件配置>
@@ -775,11 +704,6 @@ let g:cpp_concepts_highlight = 1
 " -----------------------------------------------------------------------------
 " 快速给单词/句子两边增加符号（包括html标签），缺点是不能用"."来重复命令
 " 不过 repeat 插件可以解决这个问题，详细帮助见 :h surround.txt
-
-" -----------------------------------------------------------------------------
-"  < Syntastic 插件配置 >
-" -----------------------------------------------------------------------------
-" 用于保存文件时查检语法
 
 " -----------------------------------------------------------------------------
 "  < Tagbar 插件配置 >
@@ -865,10 +789,6 @@ autocmd FileType c,cpp,objc map <buffer> = <Plug>(operator-clang-format)
 
 " autocmd FileType c,cpp ClangFormatAutoEnable
 
-" =============================================================================
-"                          << 以下为常用工具配置 >>
-" =============================================================================
-
 " -----------------------------------------------------------------------------
 "  < cscope 工具配置 >
 " -----------------------------------------------------------------------------
@@ -906,7 +826,7 @@ endif
 " -----------------------------------------------------------------------------
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
 " set autochdir
-set tags=./tags,tags;~                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
+"set tags=./tags,tags;~                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
 " map <C-F12> :!ctags -R --c++-kinds=+px --fields=+iaS --extra=+q .<CR>
 
 func! Update_cscope()
@@ -932,18 +852,6 @@ endfunc
 " }
 
 " -----------------------------------------------------------------------------
-"  < gvimfullscreen 工具配置 > 请确保已安装了工具
-" -----------------------------------------------------------------------------
-" 用于 Windows Gvim 全屏窗口，可用 F11 切换
-" 全屏后再隐藏菜单栏、工具栏、滚动条效果更好
-
-" -----------------------------------------------------------------------------
-"  < vimtweak 工具配置 > 请确保以已装了工具
-" -----------------------------------------------------------------------------
-" 这里只用于窗口透明与置顶
-" 常规模式下 Ctrl + Up（上方向键） 增加不透明度，Ctrl + Down（下方向键） 减少不透明度，<Leader>t 窗口置顶与否切换
-
-" -----------------------------------------------------------------------------
 "  < gtags 工具配置 >
 " -----------------------------------------------------------------------------
 " set cscopetag " 使用 cscope 作为 tags 命令
@@ -952,7 +860,6 @@ endfunc
 " let GtagsCscope_Auto_Load = 1
 " let CtagsCscope_Auto_Map = 1
 " let GtagsCscope_Quiet = 1
-
 
 " -----------------------------------------------------------------------------
 " < neocomplete 补全插件>
@@ -1184,15 +1091,9 @@ let g:jedi#popup_on_dot = 0
 " -----------------------------------------------------------------------------
 let g:vim_markdown_no_extensions_in_markdown = 1
 
-
+" -----------------------------------------------------------------------------
 " instant-markdown
+" -----------------------------------------------------------------------------
 let g:instant_markdown_open_to_the_world = 1
 let g:instant_markdown_allow_unsafe_content = 1
-
-" =============================================================================
-"                          << 以下为常用自动命令配置 >>
-" =============================================================================
-
-" 自动切换目录为当前编辑文件所在目录
-" au BufRead,BufNewFile,BufEnter * cd %:p:h
 
