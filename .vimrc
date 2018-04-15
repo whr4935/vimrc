@@ -524,6 +524,7 @@ endif
 "-----------------------------------------------------------------------------
 "用于括号与引号自动补全，不过会与函数原型提示插件echofunc冲突
 "所以我就没有加入echofunc插件
+let g:AutoPairsMapCR = 1
 let g:AutoPairsMapCh = 0
 
 "-----------------------------------------------------------------------------
@@ -691,8 +692,8 @@ noremap <c-l> <c-w>l
 " let NERDSpaceDelims = 1                     "在左注释符之后，右注释符之前留有空格
 
 "Ctrl+/ 切换注释
-nmap <C-_> :call NERDComment(0, "toggle")<CR>
-vmap <C-_> :call NERDComment(0, "toggle")<CR>
+nmap <silent> <C-_> :call NERDComment(0, "toggle")<CR>
+vmap <silent> <C-_> :call NERDComment(0, "toggle")<CR>
 
 
 " -----------------------------------------------------------------------------
@@ -1048,14 +1049,7 @@ if g:enable_youCompleteMe == 1
 
     " Recommended key-mappings.
     " <CR>: close popup and save indent.
-    function! s:my_cr_function()
-        " return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-        " For no inserting <CR> key.
-        return pumvisible() ? "\<C-y>" : "\<CR>"
-    endfunction
-    "inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-
-    "inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+    inoremap <expr> <CR> pumvisible() ? HackStopCompletion() : "\<CR>"
 
     " Disable the neosnippet preview candidate window
     " When enabled, there can be too much visual noise
@@ -1128,7 +1122,6 @@ if g:enable_youCompleteMe == 1
                 \ }
 
     "let g:ycm_key_invoke_completion = '<C-,>'
-    let g:ycm_key_list_stop_completion = ['<C-y>','<CR>']
     let g:ycm_key_detailed_diagnostics = '<leader>dd'
     map <silent> <C-]>  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 

@@ -1,0 +1,14 @@
+diff --git a/autoload/youcompleteme.vim b/autoload/youcompleteme.vim
+index 5df66044..eddc95cb 100644
+--- a/autoload/youcompleteme.vim
++++ b/autoload/youcompleteme.vim
+@@ -611,6 +611,9 @@ function! s:StopCompletion( key )
+   return a:key
+ endfunction
+ 
++function HackStopCompletion()
++    return s:StopCompletion('')
++endfunction
+ 
+ function! s:OnCursorMovedNormalMode()
+   if !s:AllowedToCompleteInCurrentBuffer()
