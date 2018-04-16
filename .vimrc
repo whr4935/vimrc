@@ -301,17 +301,18 @@ nnoremap <silent> <space> za
 " 当文件在外部被修改，自动更新该文件
 set autoread
 
-"保存c/c++文件时清除行尾空格
+"清除行尾空格
 fun! TrimWhitespace()
     let l:save = winsaveview()
     %s/\s\+$//e
     noh
     call winrestview(l:save)
 endfun
-au BufWritePre *.cpp,*.[ch],*.cc,*.hpp call TrimWhitespace()
+"au BufWritePre *.cpp,*.[ch],*.cc,*.hpp call TrimWhitespace()
+command Cs call TrimWhitespace()
 
 " 常规模式下输入 cM 清除行尾 ^M 符号
-nmap cM :%s/\r$//g<CR>:noh<CR>
+"nmap cM :%s/\r$//g<CR>:noh<CR>
 
 set ignorecase                                        "搜索模式里忽略大小写
 set smartcase                                         "如果搜索模式包含大写字符，不使用 'ignorecase' 选项，只有在输入搜索模式并且打开 'ignorecase' 选项时才会使用
@@ -972,7 +973,7 @@ if g:enable_youCompleteMe == 1
 
     " enable completion from tags
     "let g:ycm_collect_identifiers_from_tags_files = 1
- 
+
     "let g:ycm_max_identifier_candidates = 10   "符号补全最大个数
     "let g:ycm_max_num_candidates = 10          "语义补全最大个数
     set pumheight=15
