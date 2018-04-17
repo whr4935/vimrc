@@ -1,3 +1,6 @@
+"-----------------------------------------------------------------------------
+" < Vundle 配置 >
+"-----------------------------------------------------------------------------
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -115,34 +118,18 @@ else
     let g:islinux = 1
 endif
 
-if g:islinux
-    "set hlsearch        "高亮搜索
-    set incsearch       "在输入要搜索的文字时，实时匹配
-
-    " Uncomment the following to have Vim jump to the last position when
-    " reopening a file
-    "if has("autocmd")
-        "au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-    "endif
-
-    "	" Vim5 and later versions support syntax highlighting. Uncommenting the next
-    "	" line enables syntax highlighting by default.
-    if has("syntax")
-        syntax on
-    endif
-
-    set mouse=a                    " 在任何模式下启用鼠标
-    set t_Co=256                   " 在终端启用256色
-    set backspace=2                " 设置退格键可用
-
-    " Source a global configuration file if available
-    if filereadable("/etc/vim/vimrc.local")
-        source /etc/vim/vimrc.local
-    endif
-
+" -----------------------------------------------------------------------------
+"  < 判断是终端还是 Gvim >
+" -----------------------------------------------------------------------------
+if has("gui_running")
+    let g:isGUI = 1
+else
+    let g:isGUI = 0
 endif
 
-"==============================================================================
+" -----------------------------------------------------------------------------
+"  < 按键映射 >
+" -----------------------------------------------------------------------------
 let mapleader = ","
 
 " 设置快捷键将选中文本块复制至系统剪贴板
@@ -150,9 +137,212 @@ vnoremap <Leader>y "+y
 " 设置快捷键将系统剪贴板内容粘贴至vim
 nmap <Leader>p "+p"
 
+" Shortcuts
+" Change Working Directory to that of the current file
+cnoremap cwd lcd %:p:h
+"cmap cd. lcd %:p:h
 
+" For when you forget to sudo.. Really Write the file.
+cnoremap w!! w !sudo tee % >/dev/null
+
+" Visual shifting (does not exit Visual mode)
+vnoremap < <gv
+vnoremap > >gv
+
+" Allow using the repeat operator with a visual selection (!)
+" http://stackoverflow.com/a/8064607/127816
+vnoremap . :normal .<CR>
+
+" 常规模式下用空格键来开关光标行所在折叠（注：zR 展开所有折叠，zM 关闭所有折叠）
+" nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+nnoremap <silent> <space> za
+
+" Ctrl + K 插入模式下光标向上移动
+inoremap <c-k> <Up>
+
+" Ctrl + J 插入模式下光标向下移动
+inoremap <c-j> <Down>
+
+" Ctrl + H 插入模式下光标向左移动
+inoremap <c-h> <Left>
+
+" Ctrl + L 插入模式下光标向右移动
+inoremap <c-l> <Right>
+
+" Ctrl + a 光标跳转到行头
+inoremap <c-a> <ESC>I
+
+" Ctrl + e 光标跳转到行尾
+inoremap <c-e> <ESC>A
+
+" -----------------------------------------------------------------------------
+"让*号高亮时不跳转到下一个
+" nnoremap <silent> * :execute "normal! *N"<cr>
+nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+nnoremap <silent> # :set nohls<CR>
+
+function! MakePattern(text)
+  let pat = escape(a:text, '\')
+  let pat = substitute(pat, '\_s\+$', '\\s\\*', '')
+  let pat = substitute(pat, '^\_s\+', '\\s\\*', '')
+  let pat = substitute(pat, '\_s\+',  '\\_s\\+', 'g')
+  return '\\V' . escape(pat, '\"')
+endfunction
+vnoremap <silent> * :<C-U>let @/="<C-R>=MakePattern(@*)<CR>"<CR>:set hls<CR>
+
+" -----------------------------------------------------------------------------
+"清除行尾空格
+fun! TrimWhitespace()
+    let l:save = winsaveview()
+    %s/\s\+$//e
+    noh
+    call winrestview(l:save)
+endfun
+"au BufWritePre *.cpp,*.[ch],*.cc,*.hpp call TrimWhitespace()
+command Cs call TrimWhitespace()
+
+" 常规模式下输入 cM 清除行尾 ^M 符号
+"nmap cM :%s/\r$//g<CR>:noh<CR>
+
+" -----------------------------------------------------------------------------
+" Hex read
+nmap <Leader>hr :%!xxd -g 1<CR> :set filetype=xxd<CR> :set readonly<CR>
+
+" Hex write
+nmap <Leader>hw :set binary<CR> :%!xxd -r<CR> :set filetype=<CR> :set noreadonly<CR>
+
+" -----------------------------------------------------------------------------
+"  < 界面配置 >
+" -----------------------------------------------------------------------------
+set number                                            "显示行号
+set laststatus=2                                      "启用状态栏信息
+set cmdheight=2                                       "设置命令行的高度为2，默认为1
+set nowrap                                            "设置不自动换行
+set shortmess=atI                                     "去掉欢迎界面
 set wildmenu
 
+set mouse=a                                           " 在任何模式下启用鼠标
+set t_Co=256                                          " 在终端启用256色
+if g:isGUI
+    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 11  ":h11设置字体大小不行？
+    set guioptions-=m
+    set guioptions-=T
+    set guioptions-=r
+    set guioptions-=L
+    set lines=999 columns=999
+endif
+
+" 设置代码配色方案
+colorscheme Tomorrow-Night-Eighties               "终端配色方案
+augroup colorScheme
+    au!
+    "au FileWritePost * if &diff | let &cul=0 |endif
+    "au BufEnter * if !&diff | let &cul=1 |else | let &cul=0 | endif
+    au BufEnter * let &cul=!&diff
+augroup end
+
+" -----------------------------------------------------------------------------
+"  < 编码配置 >
+" -----------------------------------------------------------------------------
+" 注：使用utf-8格式后，软件与程序源码、文件路径不能有中文，否则报错
+set encoding=utf-8                                    "设置gvim内部编码，默认不更改
+set fileencoding=utf-8                                "设置当前文件编码，可以更改，如：gbk（同cp936）
+set fileencodings=ucs-bom,utf-8,gbk,cp936,latin-1     "设置支持打开的文件的编码
+
+" 文件格式，默认 ffs=dos,unix
+set fileformat=unix                                   "设置新（当前）文件的<EOL>格式，可以更改，如：dos（windows系统常用）
+set fileformats=unix,dos,mac                          "给出文件的<EOL>格式类型
+
+" -----------------------------------------------------------------------------
+"  < 编写文件时的配置 >
+" -----------------------------------------------------------------------------
+syntax on
+filetype on                                           "启用文件类型侦测
+filetype plugin on                                    "针对不同的文件类型加载对应的插件
+filetype plugin indent on                             "启用缩进
+"set smartindent                                       "启用智能对齐方式
+set expandtab                                         "将Tab键转换为空格
+set tabstop=4                                         "设置Tab键的宽度，可以更改，如：宽度为2
+set shiftwidth=4                                      "换行时自动缩进宽度，可更改（宽度同tabstop）
+set smarttab                                          "指定按一次backspace就删除shiftwidth宽度
+set backspace=2                                       "设置退格键可用
+set foldenable                                        "启用折叠
+set foldmethod=indent                                 "indent 折叠方式
+set foldlevel=9999                                    "折叠的层次，打开文件时默认不折叠
+
+set writebackup                                       "保存文件前建立备份，保存成功后删除该备份
+set nobackup                                          "设置无备份文件
+set noswapfile                                        "设置无临时文件
+
+" 当文件在外部被修改，自动更新该文件
+set autoread
+
+set ignorecase       "搜索模式里忽略大小写
+set smartcase        "如果搜索模式包含大写字符，不使用 'ignorecase' 选项，只有在输入搜索模式并且打开 'ignorecase' 选项时才会使用
+"set hlsearch        "高亮搜索
+set incsearch        "在输入要搜索的文字时，实时匹配
+
+" 启用每行超过80列的字符提示（字体变蓝并加下划线），不启用就注释掉
+"au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
+
+" -----------------------------------------------------------------------------
+"  < 新文件标题 >
+" -----------------------------------------------------------------------------
+"新建.c,.h,.sh,.java文件，自动插入文件头
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
+""定义函数SetTitle，自动插入文件头
+func SetTitle()
+   "如果文件类型为.sh文件
+   if &filetype == 'sh'
+       call setline(1,"\#!/bin/bash")
+       call append(line("."), "")
+   elseif &filetype == 'python'
+       call setline(1,"#!/usr/bin/env python")
+       call append(line("."),"# coding=utf-8")
+       call append(line(".")+1, "")
+
+   elseif &filetype == 'ruby'
+       call setline(1,"#!/usr/bin/env ruby")
+       call append(line("."),"# encoding: utf-8")
+       call append(line(".")+1, "")
+   else
+       call setline(1,          "/*")
+       call append(line("."),   " * Copyright (C) Harry Wang")
+       call append(line(".")+1, " *")
+       call append(line(".")+2, " * Create Time: ".strftime("%Y.%m"))
+       call append(line(".")+3, " */")
+       call append(line(".")+4, "")
+   endif
+
+   if expand("%:e") == 'cpp'
+       call append(line(".")+5, "#include <iostream>")
+       call append(line(".")+6, "")
+   endif
+
+   if expand("%:e") == 'c'
+       call append(line(".")+5, "#include<stdio.h>")
+       call append(line(".")+6, "")
+   endif
+
+   if expand("%:e") == 'h'
+       call append(line(".")+5, "#ifndef _".toupper(expand("%:t:r"))."_H")
+       call append(line(".")+6, "#define _".toupper(expand("%:t:r"))."_H")
+       call append(line(".")+7, "")
+       call append(line(".")+8, "#endif")
+   endif
+
+   if &filetype == 'java'
+       call append(line(".")+5,"public class ".expand("%:r"))
+       call append(line(".")+6,"")
+   endif
+endfunc
+
+"新建文件后，自动定位到文件末尾
+autocmd BufNewFile * normal G
+
+" -----------------------------------------------------------------------------
+" 自动设置makeprg
+" -----------------------------------------------------------------------------
 let g:firstSetMakeCpp=0
 autocmd FileType c,cpp exec ":call SetMakeprgCpp()"
 func SetMakeprgCpp()
@@ -166,27 +356,10 @@ func SetMakeprgCpp()
     endif
 endfunc
 
-"让*号高亮时不跳转到下一个
-" nnoremap <silent> * :execute "normal! *N"<cr>
-nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
-nnoremap <silent> # :set nohls<CR>
-
-set guioptions+=a
-function! MakePattern(text)
-  let pat = escape(a:text, '\')
-  let pat = substitute(pat, '\_s\+$', '\\s\\*', '')
-  let pat = substitute(pat, '^\_s\+', '\\s\\*', '')
-  let pat = substitute(pat, '\_s\+',  '\\_s\\+', 'g')
-  return '\\V' . escape(pat, '\"')
-endfunction
-vnoremap <silent> * :<C-U>let @/="<C-R>=MakePattern(@*)<CR>"<CR>:set hls<CR>
-
-" 让配置变更立即生效
-" autocmd BufWritePost $MYVIMRC source $MYVIMRC
-
 " -----------------------------------------------------------------------------
 " f5 调试，f7运行
 " -----------------------------------------------------------------------------
+" debug
 func! StartDebug(prog)
     if &filetype == 'cpp' || &filetype == 'c'
         return StartDebugCpp(a:prog)
@@ -249,6 +422,7 @@ func! StartExecuteCpp(prog)
     execute "!./" . a:p
 endfunc
 
+" execute python
 func! StartExecutePython(prog)
     execute "!python " . "%"
 endfunc
@@ -259,199 +433,6 @@ nmap <silent> <F7> :call StartExecute(expand("%:t:r"))<CR>
 
 autocmd FileType c,cpp,python set autowrite
 autocmd FileType c,cpp nnoremap <buffer> mm :make<CR>
-
-" -----------------------------------------------------------------------------
-" Hex read
-nmap <Leader>hr :%!xxd -g 1<CR> :set filetype=xxd<CR> :set readonly<CR>
-
-" Hex write
-nmap <Leader>hw :set binary<CR> :%!xxd -r<CR> :set filetype=<CR> :set noreadonly<CR>
-
-
-" -----------------------------------------------------------------------------
-"  < 编码配置 >
-" -----------------------------------------------------------------------------
-" 注：使用utf-8格式后，软件与程序源码、文件路径不能有中文，否则报错
-set encoding=utf-8                                    "设置gvim内部编码，默认不更改
-set fileencoding=utf-8                                "设置当前文件编码，可以更改，如：gbk（同cp936）
-set fileencodings=ucs-bom,utf-8,gbk,cp936,latin-1     "设置支持打开的文件的编码
-
-" 文件格式，默认 ffs=dos,unix
-set fileformat=unix                                   "设置新（当前）文件的<EOL>格式，可以更改，如：dos（windows系统常用）
-set fileformats=unix,dos,mac                          "给出文件的<EOL>格式类型
-
-" -----------------------------------------------------------------------------
-"  < 编写文件时的配置 >
-" -----------------------------------------------------------------------------
-filetype on                                           "启用文件类型侦测
-filetype plugin on                                    "针对不同的文件类型加载对应的插件
-filetype plugin indent on                             "启用缩进
-" set smartindent                                       "启用智能对齐方式
-set expandtab                                         "将Tab键转换为空格
-set tabstop=4                                         "设置Tab键的宽度，可以更改，如：宽度为2
-set shiftwidth=4                                      "换行时自动缩进宽度，可更改（宽度同tabstop）
-set smarttab                                          "指定按一次backspace就删除shiftwidth宽度
-set foldenable                                        "启用折叠
-set foldmethod=indent                                 "indent 折叠方式
-set foldlevel=9999                                    " 折叠的层次，打开文件时默认不折叠
-
-" 常规模式下用空格键来开关光标行所在折叠（注：zR 展开所有折叠，zM 关闭所有折叠）
-" nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
-nnoremap <silent> <space> za
-
-" 当文件在外部被修改，自动更新该文件
-set autoread
-
-"清除行尾空格
-fun! TrimWhitespace()
-    let l:save = winsaveview()
-    %s/\s\+$//e
-    noh
-    call winrestview(l:save)
-endfun
-"au BufWritePre *.cpp,*.[ch],*.cc,*.hpp call TrimWhitespace()
-command Cs call TrimWhitespace()
-
-" 常规模式下输入 cM 清除行尾 ^M 符号
-"nmap cM :%s/\r$//g<CR>:noh<CR>
-
-set ignorecase                                        "搜索模式里忽略大小写
-set smartcase                                         "如果搜索模式包含大写字符，不使用 'ignorecase' 选项，只有在输入搜索模式并且打开 'ignorecase' 选项时才会使用
-" set noincsearch                                       "在输入要搜索的文字时，取消实时匹配
-
-" Ctrl + K 插入模式下光标向上移动
-inoremap <c-k> <Up>
-
-" Ctrl + J 插入模式下光标向下移动
-inoremap <c-j> <Down>
-
-" Ctrl + H 插入模式下光标向左移动
-inoremap <c-h> <Left>
-
-" Ctrl + L 插入模式下光标向右移动
-inoremap <c-l> <Right>
-
-" Ctrl + a 光标跳转到行头
-inoremap <c-a> <ESC>I
-
-" Ctrl + e 光标跳转到行尾
-inoremap <c-e> <ESC>A
-
-" 启用每行超过80列的字符提示（字体变蓝并加下划线），不启用就注释掉
-"au BufWinEnter * let w:m2=matchadd('Underlined', '\%>' . 80 . 'v.\+', -1)
-
-
-" -----------------------------------------------------------------------------
-"  < 界面配置 >
-" -----------------------------------------------------------------------------
-set number                                            "显示行号
-set laststatus=2                                      "启用状态栏信息
-set cmdheight=2                                       "设置命令行的高度为2，默认为1
-"set cursorline                                        "突出显示当前行
-" set guifont=YaHei_Consolas_Hybrid:h10                 "设置字体:字号（字体名称空格用下划线代替）
-set nowrap                                            "设置不自动换行
-set shortmess=atI                                     "去掉欢迎界面
-
-" 设置代码配色方案
-colorscheme Tomorrow-Night-Eighties               "终端配色方案
-augroup colorScheme
-    au!
-    "au FileWritePost * if &diff | let &cul=0 |endif
-    "au BufEnter * if !&diff | let &cul=1 |else | let &cul=0 | endif
-    au BufEnter * let &cul=!&diff
-augroup end
-
-" colorscheme molokai
-" let g:molokai_original = 1
-" let g:rehash256 = 1
-
-" let g:solarized_termcolors=256
-" set t_Co=256
-" set background=dark
-" colorscheme solarized
-
-" -----------------------------------------------------------------------------
-"  < 新文件标题 >
-" -----------------------------------------------------------------------------
-"新建.c,.h,.sh,.java文件，自动插入文件头
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()"
-""定义函数SetTitle，自动插入文件头
-func SetTitle()
-   "如果文件类型为.sh文件
-   if &filetype == 'sh'
-       call setline(1,"\#!/bin/bash")
-       call append(line("."), "")
-   elseif &filetype == 'python'
-       call setline(1,"#!/usr/bin/env python")
-       call append(line("."),"# coding=utf-8")
-       call append(line(".")+1, "")
-
-   elseif &filetype == 'ruby'
-       call setline(1,"#!/usr/bin/env ruby")
-       call append(line("."),"# encoding: utf-8")
-       call append(line(".")+1, "")
-   else
-       call setline(1,          "/*")
-       call append(line("."),   " * Copyright (C) Harry Wang")
-       call append(line(".")+1, " *")
-       call append(line(".")+2, " * Create Time: ".strftime("%Y.%m"))
-       call append(line(".")+3, " */")
-       call append(line(".")+4, "")
-   endif
-
-   if expand("%:e") == 'cpp'
-       call append(line(".")+5, "#include <iostream>")
-       call append(line(".")+6, "")
-   endif
-
-   if expand("%:e") == 'c'
-       call append(line(".")+5, "#include<stdio.h>")
-       call append(line(".")+6, "")
-   endif
-
-   if expand("%:e") == 'h'
-       call append(line(".")+5, "#ifndef _".toupper(expand("%:t:r"))."_H")
-       call append(line(".")+6, "#define _".toupper(expand("%:t:r"))."_H")
-       call append(line(".")+7, "")
-       call append(line(".")+8, "#endif")
-   endif
-
-   if &filetype == 'java'
-       call append(line(".")+5,"public class ".expand("%:r"))
-       call append(line(".")+6,"")
-   endif
-endfunc
-
-"新建文件后，自动定位到文件末尾
-autocmd BufNewFile * normal G
-
-
-" -----------------------------------------------------------------------------
-"  < 其它配置 >
-" -----------------------------------------------------------------------------
-set writebackup                             "保存文件前建立备份，保存成功后删除该备份
-set nobackup                                "设置无备份文件
-set noswapfile                              "设置无临时文件
-set vb t_vb=                                "关闭提示音
-
-" Find merge conflict markers
-" map <leader>fc /\v^[<\|=>]{7}( .*\|$ )<CR>
-
-" Shortcuts
-" Change Working Directory to that of the current file
-cnoremap cwd lcd %:p:h
-"cmap cd. lcd %:p:h
-
-" Visual shifting (does not exit Visual mode)
-vnoremap < <gv
-vnoremap > >gv
-
-" Allow using the repeat operator with a visual selection (!)
-" http://stackoverflow.com/a/8064607/127816
-vnoremap . :normal .<CR>
-
-" For when you forget to sudo.. Really Write the file.
-cnoremap w!! w !sudo tee % >/dev/null
 
 "=============================================================================
 "                         << 以下为常用插件配置 >>
@@ -589,7 +570,7 @@ endif
 
 
 " 设置终端对齐线颜色，如果不喜欢可以将其注释掉采用默认颜色
-let g:indentLine_color_term = 239
+"let g:indentLine_color_term = 239
 
 " 设置 GUI 对齐线颜色，如果不喜欢可以将其注释掉采用默认颜色
 " let g:indentLine_color_gui = '#A4E57E'
@@ -748,7 +729,7 @@ let Tlist_Use_Right_Window=1                "在右侧窗口中显示
 "  < txtbrowser 插件配置 >
 " -----------------------------------------------------------------------------
 " 用于文本文件生成标签与与语法高亮（调用TagList插件生成标签，如果可以）
-au BufRead,BufNewFile *.txt setlocal ft=txt
+"au BufRead,BufNewFile *.txt setlocal ft=txt
 
 " -----------------------------------------------------------------------------
 "  < ZoomWin 插件配置 >
