@@ -56,7 +56,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'majutsushi/tagbar'
 Plugin 'taglist.vim'
 " Plugin 'TxtBrowser'
-Plugin 'ZoomWin'
+"Plugin 'ZoomWin'
 if v:version > 704 || (v:version == 704 && has( 'patch1578' ))
     Plugin 'Valloric/YouCompleteMe'
     Plugin 'rdnetto/YCM-Generator'
@@ -91,6 +91,7 @@ Plugin 'davidhalter/jedi-vim'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
+Plugin 'Conque-GDB'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -383,9 +384,14 @@ func! StartDebugCpp(prog)
         endif
     endif
 
-    echom "cgdb " . a:p
-    execute "!cgdb" a:p
-    sleep 100m
+    if !g:isGUI
+        echom "cgdb " . a:p
+        execute "!cgdb" a:p
+        sleep 100m
+    else
+        echom a:p
+        execute 'ConqueGdb ' . a:p
+    endif
 endfunc
 
 " debug python
@@ -1087,4 +1093,19 @@ let g:vim_markdown_no_extensions_in_markdown = 1
 " -----------------------------------------------------------------------------
 let g:instant_markdown_open_to_the_world = 1
 let g:instant_markdown_allow_unsafe_content = 1
+
+" -----------------------------------------------------------------------------
+" Conque-GDB
+" -----------------------------------------------------------------------------
+let g:ConqueTerm_Color=2            " 1: strip color after 200 line, 2: always with color
+let g:ConqueTerm_CloseOnEnd=1       " close conque when program ends running
+let g:ConqueTerm_StartMessages=0    " display warning message if conqueTerm is configed incorrect"
+let g:ConqueTerm_ReadUnfocused = 1
+let g:ConqueTerm_InsertOnEnter = 1
+let g:ConqueTerm_CWInsert = 1
+
+let g:ConqueGdb_Leader = ';'
+let g:ConqueGdb_SaveHistory = 1
+nnoremap <silent> ;Y :ConqueGdbCommand y<CR>
+nnoremap <silent> ;N :ConqueGdbCommand n<CR>
 
