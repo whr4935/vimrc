@@ -1097,15 +1097,17 @@ let g:instant_markdown_allow_unsafe_content = 1
 " -----------------------------------------------------------------------------
 " Conque-GDB
 " -----------------------------------------------------------------------------
-let g:ConqueTerm_Color=2            " 1: strip color after 200 line, 2: always with color
-let g:ConqueTerm_CloseOnEnd=1       " close conque when program ends running
-let g:ConqueTerm_StartMessages=0    " display warning message if conqueTerm is configed incorrect"
+let g:ConqueTerm_FastMode = 1
+"let g:ConqueTerm_Color=2            " 1: strip color after 200 line, 2: always with color
 let g:ConqueTerm_ReadUnfocused = 1
 let g:ConqueTerm_InsertOnEnter = 1
+let g:ConqueTerm_CloseOnEnd=1       " close conque when program ends running
+let g:ConqueTerm_StartMessages=1    " display warning message if conqueTerm is configed incorrect"
 let g:ConqueTerm_CWInsert = 1
 
 let g:ConqueGdb_Leader = ';'
 let g:ConqueGdb_SaveHistory = 1
+let g:ConqueGdb_SrcSplit = 'left'
 nnoremap <silent> ;Y :ConqueGdbCommand y<CR>
 nnoremap <silent> ;N :ConqueGdbCommand n<CR>
 
