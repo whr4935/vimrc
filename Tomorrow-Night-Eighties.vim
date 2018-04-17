@@ -6,9 +6,8 @@
 " Default GUI Colours
 let s:foreground = "cccccc"
 let s:background = "2d2d2d"
-let s:selection = "515151"
+let s:selection = "686868"
 let s:lineNr = "838383"
-"let s:line = "393939"
 let s:line = "464646"
 let s:comment = "999999"
 let s:red = "f2777a"
@@ -256,8 +255,8 @@ if has("gui_running") || &t_Co == 88 || &t_Co == 256
 	if version >= 700
 		call <SID>X("CursorLine", "", s:line, "none")
 		call <SID>X("CursorColumn", "", s:line, "none")
-		call <SID>X("PMenu", s:foreground, s:selection, "none")
-		call <SID>X("PMenuSel", s:foreground, s:selection, "reverse")
+		call <SID>X("PMenu", s:foreground, "515151", "none")
+		call <SID>X("PMenuSel", s:foreground, "515151", "reverse")
 		call <SID>X("SignColumn", "", s:background, "none")
 	end
 	if version >= 703
