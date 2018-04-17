@@ -384,14 +384,14 @@ func! StartDebugCpp(prog)
         endif
     endif
 
-    if !g:isGUI
-        echom "cgdb " . a:p
-        execute "!cgdb" a:p
-        sleep 100m
-    else
+    "if !g:isGUI
+        "echom "cgdb " . a:p
+        "execute "!cgdb" a:p
+        "sleep 100m
+    "else
         echom a:p
         execute 'ConqueGdb ' . a:p
-    endif
+    "endif
 endfunc
 
 " debug python
