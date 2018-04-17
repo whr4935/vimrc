@@ -92,6 +92,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'Conque-GDB'
+Plugin 'chrisbra/vim-autoread'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
