@@ -222,8 +222,6 @@ set nowrap                                            "设置不自动换行
 set shortmess=atI                                     "去掉欢迎界面
 set wildmenu
 
-set mouse=a                                           " 在任何模式下启用鼠标
-set t_Co=256                                          " 在终端启用256色
 if g:isGUI
     au GUIEnter * set vb t_vb=
     set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 11
@@ -232,6 +230,9 @@ if g:isGUI
     set guioptions-=r
     set guioptions-=L
     set lines=999 columns=999
+    set mouse=a                                           " 在任何模式下启用鼠标
+else
+    set t_Co=256                                          " 在终端启用256色
 endif
 
 " 设置代码配色方案
