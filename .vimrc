@@ -74,8 +74,8 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tomasr/molokai'
-Plugin 'altercation/vim-colors-solarized'
+"Plugin 'tomasr/molokai'
+"Plugin 'altercation/vim-colors-solarized'
 Plugin 'dkprice/vim-easygrep'
 " Plugin 'fholgado/minibufexpl.vim'
 Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -673,6 +673,9 @@ endif
 " let g:airline#extensions#tabline#left_sep = ' '
 " let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#whitespace#enabled = 0
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme='luna'
 
 " -----------------------------------------------------------------------------
 "  < repeat 插件配置 >
