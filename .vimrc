@@ -225,7 +225,8 @@ set wildmenu
 set mouse=a                                           " 在任何模式下启用鼠标
 set t_Co=256                                          " 在终端启用256色
 if g:isGUI
-    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 11  ":h11设置字体大小不行？
+    au GUIEnter * set vb t_vb=
+    set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline\ 11
     set guioptions-=m
     set guioptions-=T
     set guioptions-=r
