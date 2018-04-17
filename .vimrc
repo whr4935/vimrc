@@ -121,9 +121,9 @@ if g:islinux
 
     " Uncomment the following to have Vim jump to the last position when
     " reopening a file
-    if has("autocmd")
-        au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-    endif
+    "if has("autocmd")
+        "au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    "endif
 
     "	" Vim5 and later versions support syntax highlighting. Uncommenting the next
     "	" line enables syntax highlighting by default.
@@ -169,6 +169,7 @@ endfunc
 "让*号高亮时不跳转到下一个
 " nnoremap <silent> * :execute "normal! *N"<cr>
 nnoremap <silent> * :let @/='\<<C-R>=expand("<cword>")<CR>\>'<CR>:set hls<CR>
+nnoremap <silent> # :set nohls<CR>
 
 set guioptions+=a
 function! MakePattern(text)
@@ -438,8 +439,8 @@ set vb t_vb=                                "关闭提示音
 
 " Shortcuts
 " Change Working Directory to that of the current file
-cmap cwd lcd %:p:h
-cmap cd. lcd %:p:h
+cnoremap cwd lcd %:p:h
+"cmap cd. lcd %:p:h
 
 " Visual shifting (does not exit Visual mode)
 vnoremap < <gv
@@ -450,7 +451,7 @@ vnoremap > >gv
 vnoremap . :normal .<CR>
 
 " For when you forget to sudo.. Really Write the file.
-cmap w!! w !sudo tee % >/dev/null
+cnoremap w!! w !sudo tee % >/dev/null
 
 "=============================================================================
 "                         << 以下为常用插件配置 >>
