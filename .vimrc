@@ -1084,10 +1084,13 @@ nmap <silent> <F4> :call UpdateTags()<CR>
 " -----------------------------------------------------------------------------
 " jedi python补全插件
 " -----------------------------------------------------------------------------
-let g:jedi#popup_select_first=0
-autocmd FileType python setlocal completeopt=longest,menuone
 let g:jedi#auto_vim_configuration = 0
-let g:jedi#popup_on_dot = 0
+let g:jedi#popup_on_dot           = 0
+let g:jedi#popup_select_first     = 0
+let g:jedi#completions_enabled    = 0
+
+let g:jedi#goto_command           = ';d'
+let g:jedi#completions_command    = ''
 
 " -----------------------------------------------------------------------------
 "  markdown
