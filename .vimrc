@@ -88,6 +88,7 @@ Plugin 'rhysd/vim-clang-format'
 Plugin 'kana/vim-operator-user'
 " Plugin 'Chiel92/vim-autoformat'
 Plugin 'davidhalter/jedi-vim'
+Plugin 'w0rp/ale'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
@@ -1091,6 +1092,21 @@ let g:jedi#completions_enabled    = 0
 
 let g:jedi#goto_command           = ';d'
 let g:jedi#completions_command    = ''
+
+" -----------------------------------------------------------------------------
+"  ale
+" -----------------------------------------------------------------------------
+let g:ale_pattern_options = {
+            \'\.[ch]p\{0,2}$': {
+            \           'ale_enabled': 0,
+            \},
+            \
+            \'\.py$': {
+            \           'ale_enabled': 1,
+            \           'ale_linters': ['flake8'],
+            \},
+\}
+let g:ale_sign_column_always = 1
 
 " -----------------------------------------------------------------------------
 "  markdown
