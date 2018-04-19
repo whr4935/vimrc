@@ -402,7 +402,7 @@ endfunc
 
 " debug python
 func! StartDebugPython(prog)
-    execute "!python -m pdb " . "%"
+    execute "!python -m ipdb " . "%"
 endfunc
 
 " -----------------------------------------------------------------------------
