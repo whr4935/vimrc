@@ -667,6 +667,7 @@ endif
 " let g:airline#extensions#tabline#left_sep = ' '
 " let g:airline#extensions#tabline#left_alt_sep = '|'
 let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#ycm#enabled = 1
 
 let g:airline_powerline_fonts = 1
 let g:airline_theme='luna'
@@ -1107,8 +1108,12 @@ let g:ale_pattern_options = {
             \},
 \}
 let g:ale_sign_column_always = 1
-let g:ale_set_highlights = 0
+let g:ale_set_highlights = 1
 let g:ale_sign_warning = '>>'
+highlight clear ALEError
+highlight clear ALEWarning
+highlight clear ALEInfo
+
 
 " -----------------------------------------------------------------------------
 "  markdown
