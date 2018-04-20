@@ -1109,7 +1109,6 @@ let g:ale_pattern_options = {
 let g:ale_sign_column_always = 1
 let g:ale_set_highlights = 0
 let g:ale_sign_warning = '>>'
-highlight ALEWarningSign ctermbg=DarkBlue
 
 " -----------------------------------------------------------------------------
 "  markdown
