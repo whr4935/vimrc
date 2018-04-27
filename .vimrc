@@ -93,6 +93,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'Conque-GDB'
+Plugin 'lilydjwg/fcitx.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -238,6 +239,7 @@ if g:isGUI
     set mouse=a                                           " 在任何模式下启用鼠标
 else
     set t_Co=256                                          " 在终端启用256色
+    set ttimeoutlen=100
 endif
 
 " 设置代码配色方案
