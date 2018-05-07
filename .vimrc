@@ -430,11 +430,13 @@ func! StartExecuteCpp(prog)
                 echo "no executable"
                 return
             endif
+        else
+            let a:p = "./" . a:prog
         endif
     endif
 
     echom a:p
-    execute "!./" . a:p
+    execute "!" . a:p
 endfunc
 
 " execute python
