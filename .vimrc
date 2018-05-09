@@ -1025,7 +1025,7 @@ if g:enable_youCompleteMe == 1
                                     \ 'txt': 1,
                                     \ }
 
-    let g:ycm_python_binary_path = 'python'
+    let g:ycm_server_python_interpreter = 'python3'
 
     "  fix .cpp error: ValueError: Still no compile flags, no completions yet.
     let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
