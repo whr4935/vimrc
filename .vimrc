@@ -209,10 +209,10 @@ command Cs call TrimWhitespace()
 
 " -----------------------------------------------------------------------------
 " Hex read
-nmap <Leader>hr :%!xxd -g 1<CR> :set filetype=xxd<CR> :set readonly<CR>
+nmap <Leader>hr :set binary<CR>:%!xxd -g 1<CR>:set filetype=xxd<CR>:set readonly<CR>
 
 " Hex write
-nmap <Leader>hw :set binary<CR> :%!xxd -r<CR> :set filetype=<CR> :set noreadonly<CR>
+nmap <Leader>hw :set nobinary<CR>:%!xxd -r<CR>:set filetype=<CR>:set noreadonly<CR>
 
 " -----------------------------------------------------------------------------
 " active Man command ,can press 'K' on word to view man page also.
