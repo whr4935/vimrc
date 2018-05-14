@@ -315,36 +315,36 @@ func SetTitle()
        call setline(1,"#!/usr/bin/env ruby")
        call append(line("."),"# encoding: utf-8")
        call append(line(".")+1, "")
-   else
-       call setline(1,          "/*")
-       call append(line("."),   " * Copyright (C) Harry Wang")
-       call append(line(".")+1, " *")
-       call append(line(".")+2, " * Create Time: ".strftime("%Y.%m"))
-       call append(line(".")+3, " */")
-       call append(line(".")+4, "")
+   "else
+       "call setline(1,          "/*")
+       "call append(line("."),   " * Copyright (C) Harry Wang")
+       "call append(line(".")+1, " *")
+       "call append(line(".")+2, " * Create Time: ".strftime("%Y.%m"))
+       "call append(line(".")+3, " */")
+       "call append(line(".")+4, "")
    endif
 
-   if expand("%:e") == 'cpp'
-       call append(line(".")+5, "#include <iostream>")
-       call append(line(".")+6, "")
-   endif
+   "if expand("%:e") == 'cpp'
+       "call append(line(".")+5, "#include <iostream>")
+       "call append(line(".")+6, "")
+   "endif
 
-   if expand("%:e") == 'c'
-       call append(line(".")+5, "#include<stdio.h>")
-       call append(line(".")+6, "")
-   endif
+   "if expand("%:e") == 'c'
+       "call append(line(".")+5, "#include<stdio.h>")
+       "call append(line(".")+6, "")
+   "endif
 
-   if expand("%:e") == 'h'
-       call append(line(".")+5, "#ifndef _".toupper(expand("%:t:r"))."_H")
-       call append(line(".")+6, "#define _".toupper(expand("%:t:r"))."_H")
-       call append(line(".")+7, "")
-       call append(line(".")+8, "#endif")
-   endif
+   "if expand("%:e") == 'h'
+       "call append(line(".")+5, "#ifndef _".toupper(expand("%:t:r"))."_H")
+       "call append(line(".")+6, "#define _".toupper(expand("%:t:r"))."_H")
+       "call append(line(".")+7, "")
+       "call append(line(".")+8, "#endif")
+   "endif
 
-   if &filetype == 'java'
-       call append(line(".")+5,"public class ".expand("%:r"))
-       call append(line(".")+6,"")
-   endif
+   "if &filetype == 'java'
+       "call append(line(".")+5,"public class ".expand("%:r"))
+       "call append(line(".")+6,"")
+   "endif
 endfunc
 
 "新建文件后，自动定位到文件末尾
