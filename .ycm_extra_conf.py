@@ -39,13 +39,17 @@ flags = [
     '-Werror',
     '-std=c++11',
     '-isystem',
-    '/usr/bin/../lib/gcc/x86_64-linux-gnu/7.2.0/../../../../include/c++/7.2.0',
+    '/usr/include/c++/7',
     '-isystem',
-    '/usr/bin/../lib/gcc/x86_64-linux-gnu/7.2.0/../../../../include/x86_64-linux-gnu/c++/7.2.0',
+    '/usr/include/x86_64-linux-gnu/c++/7'
     '-isystem',
-    '/usr/bin/../lib/gcc/x86_64-linux-gnu/7.2.0/../../../../include/c++/7.2.0/backward',
+    '/usr/include/c++/7/backward'
+    '-isystem',
+    '/usr/lib/gcc/x86_64-linux-gnu/7/include'
     '-isystem',
     '/usr/local/include',
+    '-isystem',
+    '/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed'
     '-isystem',
     '/usr/include/x86_64-linux-gnu',
     '-isystem',
