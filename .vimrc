@@ -360,7 +360,7 @@ func SetMakeprgCpp()
         if filereadable("Makefile") || filereadable("makefile")
             set makeprg=make
         else
-            set makeprg=g++\ -g\ -std=c++11\ -Wall\ -Werror\ -pthread\ -o\ %:r\ %
+            set makeprg=g++\ -g\ -std=c++11\ -Wall\ -pthread\ -o\ %:r\ %
         endif
         let g:firstSetMakeCpp=1
     endif
@@ -393,19 +393,19 @@ func! StartDebugCpp(prog)
         endif
     endif
 
-    "if !g:isGUI
-        "echom "cgdb " . a:p
-        "execute "!cgdb" a:p
-        "sleep 100m
-    "else
+    if !g:isGUI
+        echom "cgdb " . a:p
+        execute "!cgdb" a:p
+        sleep 100m
+    else
         echom a:p
         execute 'ConqueGdb ' . a:p
-    "endif
+    endif
 endfunc
 
 " debug python
 func! StartDebugPython(prog)
-    execute "!python -m pudb " . "%"
+    execute "!python3 -m pudb " . "%"
 endfunc
 
 " -----------------------------------------------------------------------------
@@ -441,7 +441,7 @@ endfunc
 
 " execute python
 func! StartExecutePython(prog)
-    execute "!python " . "%"
+    execute "!python3 " . "%"
 endfunc
 
 " ----------------------------------------------------------------------------
@@ -654,7 +654,7 @@ if isdirectory(expand("~/.vim/bundle/nerdtree"))
     "  nmap <leader>nt :NERDTreeFind<CR>
 
     let NERDTreeShowBookmarks=1
-    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$']
+    let NERDTreeIgnore=['\.py[cd]$', '\~$', '\.swo$', '\.swp$', '^\.git$', '^\.hg$', '^\.svn$', '\.bzr$', '\.o$']
     let NERDTreeChDirMode=0
     let NERDTreeQuitOnOpen=1
     let NERDTreeMouseMode=2
