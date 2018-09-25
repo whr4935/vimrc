@@ -543,7 +543,7 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
     elseif executable('ack')
         let s:ctrlp_fallback = 'ack %s --nocolor -f'
         " On Windows use "dir" as fallback command.
-    elseif WINDOWS()
+    elseif g:iswindows == 1
         let s:ctrlp_fallback = 'dir %s /-n /b /s /a-d'
     else
         let s:ctrlp_fallback = 'find %s -type f'
