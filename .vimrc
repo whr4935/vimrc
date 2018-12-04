@@ -406,8 +406,8 @@ endfunc
 
 " debug cpp
 func! StartDebugCpp(prog)
-    let a:p = LocateCppExectuableFile(prog)
-    if !a:p
+    let a:p = LocateCppExectuableFile(a:prog)
+    if a:p==""
         return
     endif
 
@@ -439,7 +439,7 @@ endfunc
 " execute cpp
 func! StartExecuteCpp(prog)
     let a:p = LocateCppExectuableFile(a:prog)
-    if !a:p
+    if a:p==""
         return
     endif
 
