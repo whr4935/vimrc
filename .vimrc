@@ -369,6 +369,32 @@ endfunc
 " -----------------------------------------------------------------------------
 " f5 调试，f7运行
 " -----------------------------------------------------------------------------
+func! LocateCppExectuableFile(prog)
+    if exists("$OUT_DIR")
+        let a:p = $OUT_DIR . "/" . a:prog
+    else
+        let a:p = "./" . a:prog
+    endif
+
+    if filereadable(a:p)
+        "echom a:p
+    elseif exists("$BUILD_TARGET") && filereadable($BUILD_TARGET)
+        let a:p = $BUILD_TARGET
+    else
+        let a:p = "out/" . a:prog
+        if !filereadable(a:p)
+            let a:p = "build/" . a:prog
+            if !filereadable(a:p)
+                echo "no executable"
+                return
+            endif
+        endif
+    endif
+
+    return a:p
+endfunc
+
+
 " debug
 func! StartDebug(prog)
     if &filetype == 'cpp' || &filetype == 'c'
@@ -380,17 +406,9 @@ endfunc
 
 " debug cpp
 func! StartDebugCpp(prog)
-    let a:p = a:prog
-    if exists("$BUILD_TARGET") && filereadable($BUILD_TARGET)
-        let a:p = $BUILD_TARGET
-    else
-        if !filereadable(a:p)
-            let a:p = "build/" . a:prog
-            if !filereadable(a:p)
-                echo "no executable"
-                return
-            endif
-        endif
+    let a:p = LocateCppExectuableFile(prog)
+    if !a:p
+        return
     endif
 
     if !g:isGUI
@@ -420,19 +438,9 @@ endfunc
 
 " execute cpp
 func! StartExecuteCpp(prog)
-    let a:p = a:prog
-    if exists("$BUILD_TARGET") && filereadable($BUILD_TARGET)
-        let a:p = $BUILD_TARGET
-    else
-        if !filereadable(a:p)
-            let a:p = "build/" . a:prog
-            if !filereadable(a:p)
-                echo "no executable"
-                return
-            endif
-        else
-            let a:p = "./" . a:prog
-        endif
+    let a:p = LocateCppExectuableFile(a:prog)
+    if !a:p
+        return
     endif
 
     echom a:p
