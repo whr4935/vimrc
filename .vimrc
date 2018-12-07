@@ -370,25 +370,19 @@ endfunc
 " f5 调试，f7运行
 " -----------------------------------------------------------------------------
 func! LocateCppExectuableFile(prog)
-    if exists("$OUT_DIR")
+    if exists("$OUT_DIR") && filereadable($OUT_DIR . "/" . a:prog)
         let a:p = $OUT_DIR . "/" . a:prog
-    else
-        let a:p = "./" . a:prog
-    endif
-
-    if filereadable(a:p)
-        "echom a:p
     elseif exists("$BUILD_TARGET") && filereadable($BUILD_TARGET)
         let a:p = $BUILD_TARGET
-    else
+    elseif filereadable("./" . a:prog)
+        let a:p = "./" . a:prog
+    elseif filereadable("out/" . a:prog)
         let a:p = "out/" . a:prog
-        if !filereadable(a:p)
-            let a:p = "build/" . a:prog
-            if !filereadable(a:p)
-                echo "no executable"
-                return
-            endif
-        endif
+    elseif filereadable("build/" . a:prog)
+        let a:p = "build/" . a:prog
+    else
+        echo "no executable"
+        return
     endif
 
     return a:p
