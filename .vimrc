@@ -571,6 +571,8 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
         " nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
         let g:ctrlp_funky_syntax_highlight = 1
     endif
+
+    nnoremap <F8> :CtrlPFunky<CR>
 endif
 "}
 
