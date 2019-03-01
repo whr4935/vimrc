@@ -94,6 +94,8 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'Conque-GDB'
 Plugin 'lilydjwg/fcitx.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -527,7 +529,8 @@ let g:AutoPairsMapCh = 0
 " 常规模式下输入：Ctrl + p 调用插件
 " ctrlp {
 if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
-    let g:ctrlp_map = '<leader>f'
+    " use fzf instead
+    "let g:ctrlp_map = '<leader>f'
     let g:ctrlp_cmd = 'CtrlP'
     " let g:ctrlp_working_path_mode = 'ra'
     let g:ctrlp_working_path_mode = 0
@@ -575,6 +578,11 @@ if isdirectory(expand("~/.vim/bundle/ctrlp.vim/"))
     nnoremap <F8> :CtrlPFunky<CR>
 endif
 "}
+
+" -----------------------------------------------------------------------------
+" fzf
+" -----------------------------------------------------------------------------
+nnoremap <leader>f :FZF<CR>
 
 " -----------------------------------------------------------------------------
 "  < emmet-vim（前身为Zen coding） 插件配置 >
