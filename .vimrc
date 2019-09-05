@@ -1058,6 +1058,8 @@ if g:enable_youCompleteMe == 1
     autocmd FileType c,cpp        nnoremap <buffer> <silent> <leader>df :YcmCompleter FixIt<CR>
     autocmd FileType c,cpp        nnoremap <buffer> <silent> <leader>dp :YcmCompleter GetParent<CR>
     autocmd FileType c,cpp        nnoremap <buffer> <silent> <leader>dt :YcmCompleter GetType<CR>
+
+    let g:ycm_max_diagnostics_to_display = 0
 endif
 
 func! GenYcmConfig()
