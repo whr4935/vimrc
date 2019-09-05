@@ -468,13 +468,13 @@ if has("persistent_undo")
     set undodir=~/.undodir/
     set undofile
 
-    if !isdirectory(&undodir)
-        if exists("*mkdir")
-            call mkdir(&undodir, "p")
-        else
-            echom "Please create directory: " . &undodir
-        endif
-    endif
+    "if !isdirectory(&undodir)
+        "if exists("*mkdir")
+            "call mkdir(&undodir, "p")
+        "else
+            "echom "Please create directory: " . &undodir
+        "endif
+    "endif
 endif
 
 "-----------------------------------------------------------------------------
