@@ -1,3 +1,28 @@
+" -----------------------------------------------------------------------------
+"  < 判断操作系统是否是 Windows 还是 Linux >
+" -----------------------------------------------------------------------------
+let g:iswindows = 0
+let g:islinux = 0
+let g:iswsl = 0
+if(has("win32") || has("win64") || has("win95") || has("win16"))
+    let g:iswindows = 1
+else
+    let g:islinux = 1
+    let s:kernel_version = system("uname -r")
+    if s:kernel_version =~ "Microsoft"
+        let g:iswsl = 1
+    endif
+endif
+
+" -----------------------------------------------------------------------------
+"  < 判断是终端还是 Gvim >
+" -----------------------------------------------------------------------------
+if has("gui_running")
+    let g:isGUI = 1
+else
+    let g:isGUI = 0
+endif
+
 "-----------------------------------------------------------------------------
 " < Vundle 配置 >
 "-----------------------------------------------------------------------------
@@ -93,7 +118,9 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'Conque-GDB'
-Plugin 'lilydjwg/fcitx.vim'
+if g:islinux && !g:iswsl
+    Plugin 'lilydjwg/fcitx.vim'
+endif
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 
@@ -111,26 +138,6 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
-" -----------------------------------------------------------------------------
-"  < 判断操作系统是否是 Windows 还是 Linux >
-" -----------------------------------------------------------------------------
-let g:iswindows = 0
-let g:islinux = 0
-if(has("win32") || has("win64") || has("win95") || has("win16"))
-    let g:iswindows = 1
-else
-    let g:islinux = 1
-endif
-
-" -----------------------------------------------------------------------------
-"  < 判断是终端还是 Gvim >
-" -----------------------------------------------------------------------------
-if has("gui_running")
-    let g:isGUI = 1
-else
-    let g:isGUI = 0
-endif
 
 " -----------------------------------------------------------------------------
 "  < 按键映射 >
