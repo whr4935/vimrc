@@ -123,6 +123,7 @@ if g:islinux && !g:iswsl
 endif
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
+Bundle 'DoxygenToolkit.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -1168,3 +1169,26 @@ let g:ConqueGdb_SrcSplit = 'left'
 nnoremap <silent> ;Y :ConqueGdbCommand y<CR>
 nnoremap <silent> ;N :ConqueGdbCommand n<CR>
 
+" -----------------------------------------------------------------------------
+" DoxygenToolkit
+" -----------------------------------------------------------------------------
+ let g:DoxygenToolkit_briefTag_funcName = "yes"
+
+" for C++ style, change the '@' to '\'
+let g:DoxygenToolkit_commentType = "C++"
+let g:DoxygenToolkit_briefTag_pre = "\\brief "
+let g:DoxygenToolkit_templateParamTag_pre = "\\tparam "
+let g:DoxygenToolkit_paramTag_pre = "\\param "
+let g:DoxygenToolkit_returnTag = "\\return "
+let g:DoxygenToolkit_throwTag_pre = "\\throw " " @exception is also valid
+let g:DoxygenToolkit_fileTag = "\\file "
+let g:DoxygenToolkit_dateTag = "\\date "
+let g:DoxygenToolkit_authorTag = "\\author "
+let g:DoxygenToolkit_versionTag = "\\version "
+let g:DoxygenToolkit_blockTag = "\\name "
+let g:DoxygenToolkit_classTag = "\\class "
+let g:DoxygenToolkit_authorName = "houren.wang"
+let g:DoxygenToolkit_versionString = "v1.0"
+let g:doxygen_enhanced_color = 1
+
+let g:load_doxygen_syntax = 1
