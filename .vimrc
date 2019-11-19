@@ -1175,7 +1175,7 @@ nnoremap <silent> ;N :ConqueGdbCommand n<CR>
  let g:DoxygenToolkit_briefTag_funcName = "yes"
 
 " for C++ style, change the '@' to '\'
-let g:DoxygenToolkit_commentType = "C++"
+"let g:DoxygenToolkit_commentType = "C++"
 let g:DoxygenToolkit_briefTag_pre = "\\brief "
 let g:DoxygenToolkit_templateParamTag_pre = "\\tparam "
 let g:DoxygenToolkit_paramTag_pre = "\\param "
@@ -1189,6 +1189,19 @@ let g:DoxygenToolkit_blockTag = "\\name "
 let g:DoxygenToolkit_classTag = "\\class "
 let g:DoxygenToolkit_authorName = "houren.wang"
 let g:DoxygenToolkit_versionString = "v1.0"
-let g:doxygen_enhanced_color = 1
+let g:doxygen_enhanced_color = 0
+let s:date = strftime("%Y")
+let g:DoxygenToolkit_licenseTag = "\<enter>Copyright (C) ".s:date." Amlogic, Inc. All rights reserved.\<enter>\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "This program is free software; you can redistribute it and/or\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "modify it under the terms of the GNU General Public License\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "as published by the Free Software Foundation; either version 2\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "of the License, or (at your option) any later version.\<enter>\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "This program is distributed in the hope that it will be useful,\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "but WITHOUT ANY WARRANTY; without even the implied warranty of\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "GNU General Public License for more details.\<enter>\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "You should have received a copy of the GNU General Public License\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "along with this program; if not, write to the Free Software\<enter>"
+let g:DoxygenToolkit_licenseTag = g:DoxygenToolkit_licenseTag . "Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.\<enter>"
 
 let g:load_doxygen_syntax = 1
